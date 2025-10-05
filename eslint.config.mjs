@@ -10,9 +10,10 @@ export default tseslint.config(
   },
 
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
 
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    extends: [...tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         project: ['./tsconfig.json'],
@@ -23,6 +24,15 @@ export default tseslint.config(
       }
     }
   },
+
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    }
+  },
+
   {
     plugins: {
       react: reactPlugin,
