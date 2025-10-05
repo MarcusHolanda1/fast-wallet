@@ -1,10 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { httpClient } from '@app/shared/services/httpClient/httpClient';
 import { useState } from 'react';
 
 import { CardFormData, cardValidatorSchema } from '../constants/cardValidator';
-import { CARDS } from '../constants/endpoints';
+import { createCard } from '../services/getCards';
 
 const useRegisterCard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +27,7 @@ const useRegisterCard = () => {
     };
 
     try {
-      const response = await httpClient.post(CARDS, payload);
+      const response = await createCard(payload);
 
       return response;
     } catch (error) {
