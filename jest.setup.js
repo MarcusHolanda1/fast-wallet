@@ -18,5 +18,12 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
+jest.mock('toastify-react-native', () => ({
+  Toast: {
+    error: jest.fn(),
+    success: jest.fn()
+  }
+}));
+
 global.mockNavigate = mockNavigate;
 global.mockGoBack = mockGoBack;

@@ -5,6 +5,7 @@ import {
   waitFor
 } from '@testing-library/react-native';
 import { fillAndBlur } from '@app/shared/utils/helperTests';
+import { Toast } from 'toastify-react-native';
 
 import { cardValidatorMessages } from '../../../constants/cardValidator';
 import FormRegisterCard from '../../FormRegisterCard';
@@ -129,6 +130,40 @@ describe('Form Register Card tests', () => {
         },
         { timeout: 2000 }
       );
+    });
+
+    test('should show error toast when createCard throws an error', async () => {
+      mockCreateCard.mockRejectedValueOnce(new Error('API Error'));
+
+      const sut = makeSut();
+
+      fireEvent.changeText(
+        sut.getByTestId('card-number-input'),
+        mockedCardData.number
+      );
+      fireEvent.changeText(
+        sut.getByTestId('card-holder-input'),
+        mockedCardData.name
+      );
+      fireEvent.changeText(
+        sut.getByTestId('expiry-date-input'),
+        mockedCardData.expires
+      );
+      fireEvent.changeText(sut.getByTestId('cvv-input'), mockedCardData.cvv);
+
+      await waitFor(() => {
+        expect(sut.getByText('avançar')).toBeEnabled();
+      });
+
+      fireEvent.press(sut.getByText('avançar'));
+
+      await waitFor(() => {
+        expect(mockCreateCard).toHaveBeenCalled();
+      });
+
+      await waitFor(() => {
+        expect(Toast.error).toHaveBeenCalled();
+      });
     });
   });
 
