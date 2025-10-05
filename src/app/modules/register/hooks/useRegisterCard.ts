@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useAppNavigation } from '@app/shared/hooks/useNavigation';
 
 import { CardFormData, cardValidatorSchema } from '../constants/cardValidator';
 import { createCard } from '../services/card';
@@ -8,6 +9,7 @@ import { CardPayload } from '../types/card';
 
 const useRegisterCard = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigation = useAppNavigation();
 
   const {
     control,
@@ -29,9 +31,9 @@ const useRegisterCard = () => {
     };
 
     try {
-      const response = await createCard(payload);
+      await createCard(payload);
 
-      return response;
+      navigation.navigate('RegisterSuccessScreen');
     } catch (error) {
       return error;
     } finally {
