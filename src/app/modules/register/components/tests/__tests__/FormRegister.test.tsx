@@ -77,6 +77,51 @@ describe('Form Register Card tests', () => {
         );
       });
     });
+
+    test('should loading button when submitting form', async () => {
+      mockCreateCard.mockImplementation(
+        () =>
+          new Promise((resolve) =>
+            setTimeout(
+              () => resolve(mockCreateCardResponse(mockedCardData)),
+              1000
+            )
+          )
+      );
+
+      const sut = makeSut();
+
+      fireEvent.changeText(
+        sut.getByTestId('card-number-input'),
+        mockedCardData.number
+      );
+      fireEvent.changeText(
+        sut.getByTestId('card-holder-input'),
+        mockedCardData.name
+      );
+      fireEvent.changeText(
+        sut.getByTestId('expiry-date-input'),
+        mockedCardData.expires
+      );
+      fireEvent.changeText(sut.getByTestId('cvv-input'), mockedCardData.cvv);
+
+      await waitFor(() => {
+        expect(sut.getByText('avançar')).toBeEnabled();
+      });
+
+      fireEvent.press(sut.getByText('avançar'));
+
+      await waitFor(() => {
+        expect(sut.getByTestId('submit-register-card-button')).toBeDisabled();
+      });
+
+      await waitFor(
+        () => {
+          expect(mockCreateCard).toHaveBeenCalled();
+        },
+        { timeout: 2000 }
+      );
+    });
   });
 
   describe('Card Number Input', () => {

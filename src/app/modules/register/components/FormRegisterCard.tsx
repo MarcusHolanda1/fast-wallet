@@ -100,8 +100,9 @@ const FormRegisterCard = () => {
         onPress={() => void handleSubmit(onSubmit)()}
         title="avançar"
         backgroundColor={'red'}
-        disabled={!isValid}
+        disabled={!isValid || isLoading}
         isLoading={isLoading}
+        testID="submit-register-card-button"
       />
     </View>
   );
