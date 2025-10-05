@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 import { CardFormData, cardValidatorSchema } from '../constants/cardValidator';
-import { createCard } from '../services/getCards';
+import { createCard } from '../services/card';
+import { CardPayload } from '../types/card';
 
 const useRegisterCard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,10 +21,11 @@ const useRegisterCard = () => {
   const onSubmit = async (data: CardFormData) => {
     setIsLoading(true);
 
-    const payload = {
+    const payload: CardPayload = {
       number: data.cardNumber,
       cvv: data.cvv,
-      name: data.cardHolder
+      name: data.cardHolder,
+      expires: data.expiryDate
     };
 
     try {
