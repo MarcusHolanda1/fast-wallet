@@ -2,7 +2,8 @@ import {
   TouchableOpacity,
   Text,
   DimensionValue,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 import { theme } from '@shared/theme/theme';
 
@@ -13,6 +14,7 @@ interface ButtonProps {
   backgroundColor?: string;
   textColor?: string;
   width?: DimensionValue;
+  isLoading?: boolean;
 }
 
 export default function Button({
@@ -21,7 +23,8 @@ export default function Button({
   disabled,
   backgroundColor,
   textColor = '#fff',
-  width = '100%'
+  width = '100%',
+  isLoading = false
 }: ButtonProps) {
   return (
     <TouchableOpacity
@@ -33,7 +36,11 @@ export default function Button({
       onPress={onPress}
       disabled={disabled}
     >
-      <Text style={[styles.text, { color: textColor }]}>{title}</Text>
+      {isLoading ? (
+        <ActivityIndicator size="small" color={textColor} />
+      ) : (
+        <Text style={[styles.text, { color: textColor }]}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 }

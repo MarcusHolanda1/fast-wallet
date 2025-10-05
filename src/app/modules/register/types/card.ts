@@ -4,3 +4,9 @@ export interface Card {
   cvv: string;
   name: string;
 }
+
+export interface CardPayload {
+  number: string;
+  cvv: string;
+  name: string;
+}
