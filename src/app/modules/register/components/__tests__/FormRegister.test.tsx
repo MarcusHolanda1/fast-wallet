@@ -1,9 +1,5 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor
-} from '@testing-library/react-native';
+import { render, RenderResult, waitFor } from '@testing-library/react-native';
+import { fillAndBlur } from '@app/shared/utils/helperTests';
 
 import { cardValidatorMessages } from '../../constants/cardValidator';
 import FormRegisterCard from '../FormRegisterCard';
@@ -13,144 +9,145 @@ const makeSut = (): RenderResult => {
 };
 
 describe('Form Register Card tests', () => {
-  test('should render the form correctly', () => {
-    const sut = makeSut();
+  describe('Form Register', () => {
+    test('should button been disabled on initial render', () => {
+      const sut = makeSut();
 
-    expect(sut.getByText('número do cartão')).toBeTruthy();
-    expect(sut.getByText('nome do titular do cartão')).toBeTruthy();
-    expect(sut.getByText('vencimento')).toBeTruthy();
-    expect(sut.getByText('código de segurança')).toBeTruthy();
-    expect(sut.getByText('avançar')).toBeTruthy();
+      expect(sut.getByText('avançar')).toBeDisabled();
+    });
+
+    test('should render the form correctly', () => {
+      const sut = makeSut();
+
+      expect(sut.getByText('número do cartão')).toBeTruthy();
+      expect(sut.getByText('nome do titular do cartão')).toBeTruthy();
+      expect(sut.getByText('vencimento')).toBeTruthy();
+      expect(sut.getByText('código de segurança')).toBeTruthy();
+      expect(sut.getByText('avançar')).toBeTruthy();
+    });
+
+    test('should enable button and submit form when all fields are valid', async () => {});
   });
 
-  test('should button been disabled on initial render', () => {
-    const sut = makeSut();
+  describe('Card Number Input', () => {
+    test('should show error on credit card input does not show 16 chars', async () => {
+      const sut = makeSut();
 
-    expect(sut.getByText('avançar')).toBeDisabled();
-  });
+      fillAndBlur(sut, 'card-number-input', '1234');
 
-  test('should show error on credit card input does not show 16 chars', async () => {
-    const sut = makeSut();
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.cardNumber.matches)
+        ).toBeTruthy();
+      });
+    });
 
-    fireEvent.changeText(sut.getByTestId('card-number-input'), '1234');
+    test('should show required credit card error', async () => {
+      const sut = makeSut();
 
-    fireEvent(sut.getByTestId('card-number-input'), 'blur');
+      fillAndBlur(sut, 'card-number-input', '');
 
-    await waitFor(() => {
-      expect(
-        sut.getByText(cardValidatorMessages.cardNumber.matches)
-      ).toBeTruthy();
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.cardNumber.required)
+        ).toBeTruthy();
+      });
     });
   });
 
-  test('should show required credit card error', async () => {
-    const sut = makeSut();
+  describe('Card Holder Input', () => {
+    test('should show required name error', async () => {
+      const sut = makeSut();
 
-    fireEvent.changeText(sut.getByTestId('card-number-input'), '');
+      fillAndBlur(sut, 'card-holder-input', '');
 
-    fireEvent(sut.getByTestId('card-number-input'), 'blur');
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.cardHolder.required)
+        ).toBeTruthy();
+      });
+    });
 
-    await waitFor(() => {
-      expect(
-        sut.getByText(cardValidatorMessages.cardNumber.required)
-      ).toBeTruthy();
+    test('should show error on card holder input', async () => {
+      const sut = makeSut();
+
+      fillAndBlur(sut, 'card-holder-input', 'H');
+
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.cardHolder.min)
+        ).toBeTruthy();
+      });
+    });
+
+    test('not should is possible to type number on card holder input', async () => {
+      const sut = makeSut();
+
+      fillAndBlur(sut, 'card-holder-input', 'H3LL0');
+
+      await waitFor(() => {
+        expect(sut.getByTestId('card-holder-input')).toHaveProp('value', 'HLL');
+      });
     });
   });
 
-  test('should show required name error', async () => {
-    const sut = makeSut();
+  describe('Expiry Date Input', () => {
+    test('should show required expiry date error', async () => {
+      const sut = makeSut();
 
-    fireEvent.changeText(sut.getByTestId('card-holder-input'), '');
+      fillAndBlur(sut, 'expiry-date-input', '');
 
-    fireEvent(sut.getByTestId('card-holder-input'), 'blur');
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.expiryDate.required)
+        ).toBeTruthy();
+      });
+    });
 
-    await waitFor(() => {
-      expect(
-        sut.getByText(cardValidatorMessages.cardHolder.required)
-      ).toBeTruthy();
+    test('should show error on expiry date input with invalid format', async () => {
+      const sut = makeSut();
+
+      fillAndBlur(sut, 'expiry-date-input', '4444');
+
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.expiryDate.matches)
+        ).toBeTruthy();
+      });
+    });
+
+    test('should show error on expiry date input with expired date', async () => {
+      const sut = makeSut();
+
+      fillAndBlur(sut, 'expiry-date-input', '11/24');
+
+      await waitFor(() => {
+        expect(
+          sut.getByText(cardValidatorMessages.expiryDate.notExpired)
+        ).toBeTruthy();
+      });
     });
   });
 
-  test('should show error on card holder input', async () => {
-    const sut = makeSut();
+  describe('CVV Input', () => {
+    test('should show required cvv error', async () => {
+      const sut = makeSut();
 
-    fireEvent.changeText(sut.getByTestId('card-holder-input'), 'H');
-    fireEvent(sut.getByTestId('card-holder-input'), 'blur');
+      fillAndBlur(sut, 'cvv-input', '');
 
-    await waitFor(() => {
-      expect(sut.getByText(cardValidatorMessages.cardHolder.min)).toBeTruthy();
+      await waitFor(() => {
+        expect(sut.getByText(cardValidatorMessages.cvv.required)).toBeTruthy();
+      });
     });
-  });
 
-  test('not should is possible to type number on card holder input', async () => {
-    const sut = makeSut();
+    test('should show error on cvv input with less than 3 digits', async () => {
+      const sut = makeSut();
 
-    fireEvent.changeText(sut.getByTestId('card-holder-input'), 'H3LL0');
-    fireEvent(sut.getByTestId('card-holder-input'), 'blur');
+      fillAndBlur(sut, 'cvv-input', '12');
 
-    await waitFor(() => {
-      expect(sut.getByTestId('card-holder-input')).toHaveProp('value', 'HLL');
-    });
-  });
-
-  test('should show required expiry date error', async () => {
-    const sut = makeSut();
-
-    fireEvent.changeText(sut.getByTestId('expiry-date-input'), '');
-    fireEvent(sut.getByTestId('expiry-date-input'), 'blur');
-
-    await waitFor(() => {
-      expect(
-        sut.getByText(cardValidatorMessages.expiryDate.required)
-      ).toBeTruthy();
-    });
-  });
-
-  test('should show error on expiry date input with invalid format', async () => {
-    const sut = makeSut();
-
-    fireEvent.changeText(sut.getByTestId('expiry-date-input'), '4444');
-    fireEvent(sut.getByTestId('expiry-date-input'), 'blur');
-
-    await waitFor(() => {
-      expect(
-        sut.getByText(cardValidatorMessages.expiryDate.matches)
-      ).toBeTruthy();
-    });
-  });
-
-  test('should show error on expiry date input with expired date', async () => {
-    const sut = makeSut();
-
-    fireEvent.changeText(sut.getByTestId('expiry-date-input'), '11/24');
-    fireEvent(sut.getByTestId('expiry-date-input'), 'blur');
-
-    await waitFor(() => {
-      expect(
-        sut.getByText(cardValidatorMessages.expiryDate.notExpired)
-      ).toBeTruthy();
-    });
-  });
-
-  test('should show required cvv error', async () => {
-    const sut = makeSut();
-
-    fireEvent.changeText(sut.getByTestId('cvv-input'), '');
-    fireEvent(sut.getByTestId('cvv-input'), 'blur');
-
-    await waitFor(() => {
-      expect(sut.getByText(cardValidatorMessages.cvv.required)).toBeTruthy();
-    });
-  });
-
-  test('should show error on cvv input with less than 3 digits', async () => {
-    const sut = makeSut();
-
-    fireEvent.changeText(sut.getByTestId('cvv-input'), '12');
-    fireEvent(sut.getByTestId('cvv-input'), 'blur');
-
-    await waitFor(() => {
-      expect(sut.getByText(cardValidatorMessages.cvv.matches)).toBeTruthy();
+      await waitFor(() => {
+        expect(sut.getByText(cardValidatorMessages.cvv.matches)).toBeTruthy();
+      });
     });
   });
 });
