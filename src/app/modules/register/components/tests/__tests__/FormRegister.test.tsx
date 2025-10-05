@@ -22,6 +22,10 @@ const makeSut = (): RenderResult => {
 };
 
 describe('Form Register Card tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('Form Register', () => {
     test('should button been disabled on initial render', () => {
       const sut = makeSut();
@@ -39,7 +43,7 @@ describe('Form Register Card tests', () => {
       expect(sut.getByText('avançar')).toBeTruthy();
     });
 
-    test('should enable button and submit form when all fields are valid', async () => {
+    test('should submit form and navigate to RegisterSuccessScreen when all fields are valid', async () => {
       mockCreateCard.mockResolvedValueOnce(
         mockCreateCardResponse(mockedCardData)
       );
@@ -75,6 +79,10 @@ describe('Form Register Card tests', () => {
             cvv: mockedCardData.cvv
           })
         );
+      });
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith('RegisterSuccessScreen');
       });
     });
 
