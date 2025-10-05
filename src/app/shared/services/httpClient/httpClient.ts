@@ -1,125 +1,77 @@
-import type { RequestConfig, HttpError } from './types';
+import {
+  HttpClient,
+  HttpError,
+  HttpRequestConfig,
+  HttpResponse
+} from './types';
 
-interface HttpConfig {
-  baseURL: string;
-  timeout: number;
-}
+export class FetchHttpClient implements HttpClient {
+  private baseUrl: string;
 
-const getConfig = (): HttpConfig => {
-  return {
-    baseURL: 'http://localhost:3000',
-    timeout: 30000
-  };
-};
-const httpConfig = getConfig();
-
-class HttpClient {
-  private async handleError(error: unknown): Promise<never> {
-    let httpError: HttpError;
-
-    if (error instanceof Response) {
-      httpError = {
-        name: 'HttpError',
-        message: error.statusText || 'Request failed',
-        status: error.status,
-        statusText: error.statusText,
-        data: await error.json().catch(() => null)
-      } as HttpError;
-    } else {
-      httpError = {
-        name: 'HttpError',
-        message: error instanceof Error ? error.message : 'Unknown error',
-        status: 0,
-        statusText: 'Network Error'
-      } as HttpError;
-    }
-
-    throw httpError;
-  }
-
-  private async makeRequest<T>(
-    path: string,
-    options: RequestInit & RequestConfig = {}
-  ): Promise<T> {
-    const { ...config } = options;
-
-    const url = new URL(path, httpConfig.baseURL).toString();
-
-    const requestOptions: RequestInit = {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...config.headers
-      }
-    };
-
-    try {
-      const controller = new AbortController();
-
-      const response = await fetch(url, {
-        ...requestOptions,
-        signal: controller.signal
-      });
-
-      if (!response.ok) {
-        await this.handleError(response);
-      }
-
-      return (await response.json()) as T;
-    } catch (error) {
-      return this.handleError(error);
-    }
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
   }
 
   private buildUrl(
-    path: string,
-    params?: Record<string, string | number>
-  ): string {
-    const url = new URL(path, httpConfig.baseURL);
-    if (params) {
-      Object.entries(params).forEach(([key, value]) => {
-        url.searchParams.append(key, String(value));
-      });
+    url: string,
+    query?: Record<string, string | number | boolean>
+  ) {
+    if (!query) return `${this.baseUrl}${url}`;
+    const params = new URLSearchParams();
+    Object.entries(query).forEach(([key, value]) => {
+      params.append(key, String(value));
+    });
+    return `${this.baseUrl}${url}?${params.toString()}`;
+  }
+
+  private async request<T>(
+    method: string,
+    url: string,
+    config?: HttpRequestConfig
+  ): Promise<HttpResponse<T>> {
+    const fullUrl = this.buildUrl(url, config?.query);
+
+    const response = await fetch(fullUrl, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...config?.headers
+      },
+      body: config?.body ? JSON.stringify(config.body) : undefined
+    });
+
+    const contentType = response.headers.get('Content-Type') || '';
+    const isJson = contentType.includes('application/json');
+    const data: unknown = isJson
+      ? await response.json()
+      : await response.text();
+
+    if (!response.ok) {
+      throw new HttpError(response.statusText, response.status, data);
     }
-    return url.toString();
+
+    return { data: data as T, status: response.status };
   }
 
-  async get<T>(
-    path: string,
-    params?: Record<string, string | number>,
-    config?: RequestConfig
-  ): Promise<T> {
-    const url = this.buildUrl(path, params);
-    return this.makeRequest<T>(url, { method: 'GET', ...config });
+  get<T>(url: string, config?: HttpRequestConfig) {
+    return this.request<T>('GET', url, config);
   }
 
-  async post<T>(
-    path: string,
-    body?: unknown,
-    config?: RequestConfig
-  ): Promise<T> {
-    return this.makeRequest<T>(path, {
-      method: 'POST',
-      body: body ? JSON.stringify(body) : undefined,
-      ...config
-    });
+  post<T>(url: string, config?: HttpRequestConfig) {
+    return this.request<T>('POST', url, config);
   }
 
-  async put<T>(
-    path: string,
-    body?: unknown,
-    config?: RequestConfig
-  ): Promise<T> {
-    return this.makeRequest<T>(path, {
-      method: 'PUT',
-      body: body ? JSON.stringify(body) : undefined,
-      ...config
-    });
+  put<T>(url: string, config?: HttpRequestConfig) {
+    return this.request<T>('PUT', url, config);
   }
 
-  async delete<T>(path: string, config?: RequestConfig): Promise<T> {
-    return this.makeRequest<T>(path, { method: 'DELETE', ...config });
+  patch<T>(url: string, config?: HttpRequestConfig) {
+    return this.request<T>('PATCH', url, config);
+  }
+
+  delete<T>(url: string, config?: HttpRequestConfig) {
+    return this.request<T>('DELETE', url, config);
   }
 }
 
-export const httpClient = new HttpClient();
+export const httpClient = new FetchHttpClient('http://localhost:3000');
