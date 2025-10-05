@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useAppNavigation } from '@app/shared/hooks/useNavigation';
+import { Toast } from 'toastify-react-native';
 
 import { CardFormData, cardValidatorSchema } from '../constants/cardValidator';
 import { createCard } from '../services/card';
@@ -35,6 +36,7 @@ const useRegisterCard = () => {
 
       navigation.navigate('RegisterSuccessScreen');
     } catch (error) {
+      Toast.error('Erro ao cadastrar cartão. Tente novamente.');
       return error;
     } finally {
       setIsLoading(false);
