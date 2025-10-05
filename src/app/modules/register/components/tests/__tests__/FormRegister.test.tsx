@@ -1,8 +1,21 @@
-import { render, RenderResult, waitFor } from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor
+} from '@testing-library/react-native';
 import { fillAndBlur } from '@app/shared/utils/helperTests';
 
-import { cardValidatorMessages } from '../../constants/cardValidator';
-import FormRegisterCard from '../FormRegisterCard';
+import { cardValidatorMessages } from '../../../constants/cardValidator';
+import FormRegisterCard from '../../FormRegisterCard';
+import {
+  generateFakeCardData,
+  mockCreateCardResponse
+} from '../__mocks__/FormRegisterMock';
+import * as cardService from '../../../services/card';
+
+const mockedCardData = generateFakeCardData();
+const mockCreateCard = jest.spyOn(cardService, 'createCard');
 
 const makeSut = (): RenderResult => {
   return render(<FormRegisterCard />);
@@ -26,7 +39,44 @@ describe('Form Register Card tests', () => {
       expect(sut.getByText('avançar')).toBeTruthy();
     });
 
-    test('should enable button and submit form when all fields are valid', async () => {});
+    test('should enable button and submit form when all fields are valid', async () => {
+      mockCreateCard.mockResolvedValueOnce(
+        mockCreateCardResponse(mockedCardData)
+      );
+
+      const sut = makeSut();
+
+      fireEvent.changeText(
+        sut.getByTestId('card-number-input'),
+        mockedCardData.number
+      );
+      fireEvent.changeText(
+        sut.getByTestId('card-holder-input'),
+        mockedCardData.name
+      );
+      fireEvent.changeText(
+        sut.getByTestId('expiry-date-input'),
+        mockedCardData.expires
+      );
+      fireEvent.changeText(sut.getByTestId('cvv-input'), mockedCardData.cvv);
+
+      await waitFor(() => {
+        expect(sut.getByText('avançar')).toBeEnabled();
+      });
+
+      fireEvent.press(sut.getByText('avançar'));
+
+      await waitFor(() => {
+        expect(mockCreateCard).toHaveBeenCalledWith(
+          expect.objectContaining({
+            number: mockedCardData.number,
+            name: mockedCardData.name,
+            expires: mockedCardData.expires,
+            cvv: mockedCardData.cvv
+          })
+        );
+      });
+    });
   });
 
   describe('Card Number Input', () => {
