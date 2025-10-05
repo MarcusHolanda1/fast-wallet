@@ -1,5 +1,17 @@
-import { httpConfig } from '../../config/http.config';
 import type { RequestConfig, HttpError } from './types';
+
+interface HttpConfig {
+  baseURL: string;
+  timeout: number;
+}
+
+const getConfig = (): HttpConfig => {
+  return {
+    baseURL: 'http://localhost:3000',
+    timeout: 30000
+  };
+};
+const httpConfig = getConfig();
 
 class HttpClient {
   private async handleError(error: unknown): Promise<never> {
