@@ -55,22 +55,24 @@ const InputText: React.FC<InputTextProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
+    height: 45,
+    borderRadius: 6,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
     marginVertical: 8,
-    backgroundColor: theme.colors.base.greyLight
+    borderWidth: 1,
+    borderColor: theme.colors.base.greyLight,
+    backgroundColor: theme.colors.base.white
   },
   input: {
-    flex: 1,
-    fontSize: 16,
+    ...theme.typography.p,
     color: theme.colors.text.black,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
+    flex: 1
   },
   iconContainer: {
-    marginLeft: 12,
+    marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center'
   },

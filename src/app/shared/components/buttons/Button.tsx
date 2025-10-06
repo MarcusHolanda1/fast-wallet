@@ -53,11 +53,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 55
   },
   text: {
-    fontSize: theme.typography.h5.fontSize,
-    fontWeight: '600'
+    ...theme.typography.h5
   },
   disabled: {
     opacity: 0.5

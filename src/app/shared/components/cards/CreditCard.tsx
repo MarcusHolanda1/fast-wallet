@@ -40,6 +40,7 @@ export default function CreditCard({
 const styles = StyleSheet.create({
   cardContainer: {
     height: 180,
+    width: '100%',
     borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 30,

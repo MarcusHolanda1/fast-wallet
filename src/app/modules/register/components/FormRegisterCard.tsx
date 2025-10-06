@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { Masks } from 'react-native-mask-input';
 import { replaceWithTextOnly } from '@app/shared/utils/replaces';
+import { theme } from '@app/shared/theme/theme';
 
 import useRegisterCard from '../hooks/useRegisterCard';
 import { cardMask } from '../constants/masks';
@@ -13,7 +14,7 @@ const FormRegisterCard = () => {
     useRegisterCard();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ width: '100%' }}>
       <Controller
         control={control}
         name="cardNumber"
@@ -25,7 +26,6 @@ const FormRegisterCard = () => {
             mask={Masks.CREDIT_CARD}
             placeholder="XXXX XXXX XXXX XXXX"
             keyboardType="numeric"
-            style={{ marginBottom: 10 }}
             errorText={errors.cardNumber?.message}
             testID="card-number-input"
           />
@@ -44,7 +44,6 @@ const FormRegisterCard = () => {
             }}
             keyboardType="default"
             autoCapitalize="words"
-            style={{ marginBottom: 20 }}
             errorText={errors.cardHolder?.message}
             testID="card-holder-input"
           />
@@ -99,10 +98,13 @@ const FormRegisterCard = () => {
       <Button
         onPress={() => void handleSubmit(onSubmit)()}
         title="avançar"
-        backgroundColor={'red'}
+        backgroundColor={
+          isValid ? theme.colors.base.blueLight : theme.colors.base.greyLight
+        }
         disabled={!isValid || isLoading}
         isLoading={isLoading}
         testID="submit-register-card-button"
+        textColor={isValid ? theme.colors.base.white : theme.colors.text.grey}
       />
     </View>
   );
