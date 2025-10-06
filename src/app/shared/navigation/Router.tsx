@@ -57,6 +57,7 @@ export const Routes = () => {
           component={WalletScreen}
           options={{
             headerShown: true,
+            headerTransparent: false,
             header: ({ navigation, route, options }) => (
               <CustomWalletHeader
                 title={options.title || route.name}
