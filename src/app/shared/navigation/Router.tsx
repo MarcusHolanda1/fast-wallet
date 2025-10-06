@@ -23,6 +23,7 @@ export const Routes = () => {
           },
           gestureEnabled: true,
           animation: 'none',
+          headerTransparent: true,
           header: ({ navigation, route, options }) => (
             <CustomTransparentHeader
               title={options.title || route.name}

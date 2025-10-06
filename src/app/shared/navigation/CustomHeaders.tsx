@@ -38,14 +38,15 @@ export const CustomTransparentHeader = ({
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: theme.colors.base.blueDark
+    backgroundColor: 'transparent'
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 25,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    zIndex: 10
   },
   backButton: {
     padding: 8
