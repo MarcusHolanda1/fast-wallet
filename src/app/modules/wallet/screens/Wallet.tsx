@@ -1,5 +1,6 @@
 import { useAppSelector } from '@app/store/hooks';
 import { Text, View } from 'react-native';
+import PageContainer from '@app/shared/components/containers/PageContainer';
 
 import useGetCards from '../hooks/useGetCards';
 
@@ -17,7 +18,7 @@ export default function WalletScreen() {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <PageContainer showWalletHeader={true} showTitle={false}>
       <Text>Meus cartões</Text>
 
       {cards.map((card) => (
@@ -27,6 +28,6 @@ export default function WalletScreen() {
           <Text>Validade: {card.expires}</Text>
         </View>
       ))}
-    </View>
+    </PageContainer>
   );
 }
