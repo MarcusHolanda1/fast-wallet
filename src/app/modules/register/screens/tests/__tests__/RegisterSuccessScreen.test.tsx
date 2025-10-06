@@ -1,4 +1,4 @@
-import { render, RenderResult } from '@testing-library/react-native';
+import { fireEvent, render, RenderResult } from '@testing-library/react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 import { Card } from '@app/shared/types/card';
 import { generateFakeCardData } from '@app/modules/register/__mocks__/registerMocks';
@@ -37,5 +37,11 @@ describe('Register Success Screen', () => {
     expect(sut.getByText(mockFakeCard.number)).toBeTruthy();
     expect(sut.getByText(mockFakeCard.name)).toBeTruthy();
     expect(sut.getByText(`Validade ${mockFakeCard.expires}`)).toBeTruthy();
+  });
+
+  test('should navigate to WalletScreen on button press', () => {
+    fireEvent.press(sut.getByText('avançar'));
+
+    expect(mockNavigate).toHaveBeenCalledWith('WalletScreen');
   });
 });
