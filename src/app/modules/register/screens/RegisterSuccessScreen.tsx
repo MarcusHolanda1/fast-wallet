@@ -3,6 +3,7 @@ import { theme } from '@app/shared/theme/theme';
 import CreditCard from '@app/shared/components/cards/CreditCard';
 import Button from '@app/shared/components/buttons/Button';
 import { Card } from '@app/shared/types/card';
+import { useAppNavigation } from '@app/shared/hooks/useNavigation';
 
 export default function RegisterSuccessScreen({
   route
@@ -10,6 +11,8 @@ export default function RegisterSuccessScreen({
   route: { params: { card: Card } };
 }) {
   const { card: cardData } = route.params;
+
+  const navigate = useAppNavigation();
 
   return (
     <View
@@ -51,7 +54,7 @@ export default function RegisterSuccessScreen({
       />
       <Button
         title="avançar"
-        onPress={() => {}}
+        onPress={() => navigate.navigate('WalletScreen')}
         backgroundColor={theme.colors.base.blueLight}
       />
     </View>

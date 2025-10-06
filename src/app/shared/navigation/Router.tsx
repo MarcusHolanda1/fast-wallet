@@ -16,21 +16,39 @@ export const Routes = () => {
       <Navigator
         initialRouteName={'HomeScreen'}
         screenOptions={{
-          headerShown: false,
           contentStyle: {
             backgroundColor: 'transparent'
           },
-          gestureEnabled: false,
+          gestureEnabled: true,
           animation: 'none'
         }}
       >
-        <Screen name="HomeScreen" component={HomeScreen} />
-        <Screen name="RegisterScreen" component={RegisterScreen} />
+        <Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Screen
+          name="RegisterScreen"
+          component={RegisterScreen}
+          options={{
+            headerShown: true
+          }}
+        />
         <Screen
           name="RegisterSuccessScreen"
           component={RegisterSuccessScreen}
+          options={{
+            headerShown: true
+          }}
         />
-        <Screen name="WalletScreen" component={WalletScreen} />
+        <Screen
+          name="WalletScreen"
+          component={WalletScreen}
+          options={{
+            headerShown: true
+          }}
+        />
       </Navigator>
     </NavigationContainer>
   );
