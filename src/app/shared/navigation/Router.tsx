@@ -6,6 +6,7 @@ import WalletScreen from '@app/modules/wallet/screens/Wallet';
 import RegisterSuccessScreen from '@app/modules/register/screens/RegisterSuccessScreen';
 
 import { RootStackParamList } from './types';
+import { CustomTransparentHeader } from './CustomHeaders';
 
 export const Routes = () => {
   const { Navigator, Screen } =
@@ -20,7 +21,14 @@ export const Routes = () => {
             backgroundColor: 'transparent'
           },
           gestureEnabled: true,
-          animation: 'none'
+          animation: 'none',
+          header: ({ navigation, route, options }) => (
+            <CustomTransparentHeader
+              title={options.title || route.name}
+              navigation={navigation}
+              canGoBack={navigation.canGoBack()}
+            />
+          )
         }}
       >
         <Screen
