@@ -7,14 +7,12 @@ import {
 import { fillAndBlur } from '@app/shared/utils/helperTests';
 import { Toast } from 'toastify-react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
+import { generateFakeCardData } from '@app/modules/register/__mocks__/registerMocks';
 
 import { cardValidatorMessages } from '../../../constants/cardValidator';
 import FormRegisterCard from '../../FormRegisterCard';
-import {
-  generateFakeCardData,
-  mockCreateCardResponse
-} from '../__mocks__/FormRegisterMock';
 import * as cardService from '../../../services/card';
+import { mockCreateCardResponse } from '../__mocks__/FormRegisterMock';
 
 const mockedCardData = generateFakeCardData();
 const mockCreateCard = jest.spyOn(cardService, 'createCard');
@@ -28,20 +26,19 @@ const makeSut = (): RenderResult => {
 };
 
 describe('Form Register Card tests', () => {
+  let sut: RenderResult;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    sut = makeSut();
   });
 
   describe('Form Register', () => {
     test('should button been disabled on initial render', () => {
-      const sut = makeSut();
-
       expect(sut.getByText('avançar')).toBeDisabled();
     });
 
     test('should render the form correctly', () => {
-      const sut = makeSut();
-
       expect(sut.getByText('número do cartão')).toBeTruthy();
       expect(sut.getByText('nome do titular do cartão')).toBeTruthy();
       expect(sut.getByText('vencimento')).toBeTruthy();
@@ -53,8 +50,6 @@ describe('Form Register Card tests', () => {
       mockCreateCard.mockResolvedValueOnce(
         mockCreateCardResponse(mockedCardData)
       );
-
-      const sut = makeSut();
 
       fireEvent.changeText(
         sut.getByTestId('card-number-input'),
@@ -88,7 +83,9 @@ describe('Form Register Card tests', () => {
       });
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith('RegisterSuccessScreen');
+        expect(mockNavigate).toHaveBeenCalledWith('RegisterSuccessScreen', {
+          card: mockedCardData
+        });
       });
     });
 
@@ -102,8 +99,6 @@ describe('Form Register Card tests', () => {
             )
           )
       );
-
-      const sut = makeSut();
 
       fireEvent.changeText(
         sut.getByTestId('card-number-input'),
@@ -140,8 +135,6 @@ describe('Form Register Card tests', () => {
     test('should show error toast when createCard throws an error', async () => {
       mockCreateCard.mockRejectedValueOnce(new Error('API Error'));
 
-      const sut = makeSut();
-
       fireEvent.changeText(
         sut.getByTestId('card-number-input'),
         mockedCardData.number
@@ -174,8 +167,6 @@ describe('Form Register Card tests', () => {
 
   describe('Card Number Input', () => {
     test('should show error on credit card input does not show 16 chars', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'card-number-input', '1234');
 
       await waitFor(() => {
@@ -186,8 +177,6 @@ describe('Form Register Card tests', () => {
     });
 
     test('should show required credit card error', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'card-number-input', '');
 
       await waitFor(() => {
@@ -200,8 +189,6 @@ describe('Form Register Card tests', () => {
 
   describe('Card Holder Input', () => {
     test('should show required name error', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'card-holder-input', '');
 
       await waitFor(() => {
@@ -212,8 +199,6 @@ describe('Form Register Card tests', () => {
     });
 
     test('should show error on card holder input', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'card-holder-input', 'H');
 
       await waitFor(() => {
@@ -224,8 +209,6 @@ describe('Form Register Card tests', () => {
     });
 
     test('not should is possible to type number on card holder input', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'card-holder-input', 'H3LL0');
 
       await waitFor(() => {
@@ -236,8 +219,6 @@ describe('Form Register Card tests', () => {
 
   describe('Expiry Date Input', () => {
     test('should show required expiry date error', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'expiry-date-input', '');
 
       await waitFor(() => {
@@ -248,8 +229,6 @@ describe('Form Register Card tests', () => {
     });
 
     test('should show error on expiry date input with invalid format', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'expiry-date-input', '4444');
 
       await waitFor(() => {
@@ -260,8 +239,6 @@ describe('Form Register Card tests', () => {
     });
 
     test('should show error on expiry date input with expired date', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'expiry-date-input', '11/24');
 
       await waitFor(() => {
@@ -274,8 +251,6 @@ describe('Form Register Card tests', () => {
 
   describe('CVV Input', () => {
     test('should show required cvv error', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'cvv-input', '');
 
       await waitFor(() => {
@@ -284,8 +259,6 @@ describe('Form Register Card tests', () => {
     });
 
     test('should show error on cvv input with less than 3 digits', async () => {
-      const sut = makeSut();
-
       fillAndBlur(sut, 'cvv-input', '12');
 
       await waitFor(() => {
