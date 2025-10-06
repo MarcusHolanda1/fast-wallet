@@ -21,7 +21,11 @@ export default function WalletScreen() {
   }
 
   return (
-    <PageContainer showWalletHeader showTitle={false}>
+    <PageContainer
+      showWalletHeader
+      showTitle={false}
+      showBackgroundImages={false}
+    >
       <View style={styles.walletContainer}>
         {cards &&
           cards.map((card, index) => {
