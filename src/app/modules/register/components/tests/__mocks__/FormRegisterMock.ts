@@ -1,4 +1,4 @@
-import { Card } from '@app/modules/register/types/card';
+import { Card } from '@app/shared/types/card';
 
 export const generateFakeCardData = (): Card => {
   return {
