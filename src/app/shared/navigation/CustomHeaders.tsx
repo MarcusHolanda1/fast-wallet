@@ -60,5 +60,15 @@ const styles = StyleSheet.create({
   },
   rightSpace: {
     width: 40
+  },
+  plusButton: {
+    padding: 8,
+    width: 40,
+    alignItems: 'center'
+  },
+  plusText: {
+    ...theme.typography.h3,
+    color: theme.colors.base.blueLight,
+    fontSize: 24
   }
 });
