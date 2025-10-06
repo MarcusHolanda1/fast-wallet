@@ -15,6 +15,7 @@ interface ButtonProps {
   textColor?: string;
   width?: DimensionValue;
   isLoading?: boolean;
+  testID?: string;
 }
 
 export default function Button({
@@ -24,7 +25,8 @@ export default function Button({
   backgroundColor,
   textColor = '#fff',
   width = '100%',
-  isLoading = false
+  isLoading = false,
+  testID
 }: ButtonProps) {
   return (
     <TouchableOpacity
@@ -35,6 +37,7 @@ export default function Button({
       ]}
       onPress={onPress}
       disabled={disabled}
+      testID={testID}
     >
       {isLoading ? (
         <ActivityIndicator size="small" color={textColor} />

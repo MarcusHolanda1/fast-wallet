@@ -1,10 +1,46 @@
-export interface RequestConfig {
+export interface HttpRequestConfig {
   headers?: Record<string, string>;
-  timeout?: number;
+  query?: Record<string, string | number | boolean>;
+  body?: unknown;
 }
 
-export interface HttpError extends Error {
+export interface HttpResponse<T = unknown> {
+  data: T;
   status: number;
-  statusText: string;
-  data?: unknown;
+}
+
+export class HttpError extends Error {
+  public status: number;
+  public data: unknown;
+
+  constructor(message: string, status: number, data?: unknown) {
+    super(message);
+    this.name = 'HttpError';
+    this.status = status;
+    this.data = data;
+  }
+}
+
+
+export interface HttpClient {
+  get<T = unknown>(
+    url: string,
+    config?: HttpRequestConfig
+  ): Promise<HttpResponse<T>>;
+  post<T = unknown>(
+    url: string,
+    config?: HttpRequestConfig
+  ): Promise<HttpResponse<T>>;
+  put<T = unknown>(
+    url: string,
+    config?: HttpRequestConfig
+  ): Promise<HttpResponse<T>>;
+  patch<T = unknown>(
+    url: string,
+    config?: HttpRequestConfig
+  ): Promise<HttpResponse<T>>;
+  delete<T = unknown>(
+    url: string,
+    config?: HttpRequestConfig
+  ): Promise<HttpResponse<T>>;
 }

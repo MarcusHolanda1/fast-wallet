@@ -1,13 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { httpClient } from '@app/shared/services/httpClient/httpClient';
 import { useState } from 'react';
+import { useAppNavigation } from '@app/shared/hooks/useNavigation';
+import { Toast } from 'toastify-react-native';
+import { useAppDispatch } from '@app/store/hooks';
+import { setCard } from '@app/shared/store/cardSlice';
 
 import { CardFormData, cardValidatorSchema } from '../constants/cardValidator';
-import { CARDS } from '../constants/endpoints';
+import { createCard } from '../services/card';
+import { CardPayload } from '../../../shared/types/card';
 
 const useRegisterCard = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -21,17 +27,23 @@ const useRegisterCard = () => {
   const onSubmit = async (data: CardFormData) => {
     setIsLoading(true);
 
-    const payload = {
+    const payload: CardPayload = {
       number: data.cardNumber,
       cvv: data.cvv,
-      name: data.cardHolder
+      name: data.cardHolder,
+      expires: data.expiryDate
     };
 
     try {
-      const response = await httpClient.post(CARDS, payload);
+      const response = await createCard(payload);
 
-      return response;
+      dispatch(setCard(response.data));
+
+      control._reset();
+
+      navigation.navigate('RegisterSuccessScreen', { card: response.data });
     } catch (error) {
+      Toast.error('Erro ao cadastrar cartão. Tente novamente.');
       return error;
     } finally {
       setIsLoading(false);
