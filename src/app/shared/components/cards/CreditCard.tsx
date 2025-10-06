@@ -1,36 +1,32 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { theme } from '@shared/theme/theme';
+import { Card } from '@app/shared/types/card';
 
 interface CreditCardProps {
-  cardholderName: string;
-  cardNumber: string;
-  expiryDate: string;
-  cardType: string;
-  backgroundColor: string;
-  textColor: string;
+  card: Card;
+
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 export default function CreditCard({
-  cardholderName,
-  cardNumber,
-  expiryDate,
-  cardType,
+  card,
   backgroundColor,
   textColor
 }: CreditCardProps) {
   return (
     <View style={[styles.cardContainer, { backgroundColor: backgroundColor }]}>
-      <Text style={styles.cardType}>{cardType}</Text>
+      <Text style={[styles.cardType, { color: textColor }]}>{card.id}</Text>
 
       <View style={styles.cardContent}>
         <Text style={[styles.cardholderName, { color: textColor }]}>
-          {cardholderName}
+          {card.name}
         </Text>
         <Text style={[styles.cardNumber, { color: textColor }]}>
-          {cardNumber}
+          {card.number}
         </Text>
         <Text style={[styles.expiryDate, { color: textColor }]}>
-          Validade {expiryDate}
+          Validade {card.expires}
         </Text>
       </View>
     </View>
