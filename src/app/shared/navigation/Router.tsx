@@ -7,6 +7,7 @@ import RegisterSuccessScreen from '@app/modules/register/screens/RegisterSuccess
 
 import { RootStackParamList } from './types';
 import { CustomTransparentHeader } from './CustomHeaders';
+import { CustomWalletHeader } from './CustomWalletHeader';
 
 export const Routes = () => {
   const { Navigator, Screen } =
@@ -54,7 +55,14 @@ export const Routes = () => {
           name="WalletScreen"
           component={WalletScreen}
           options={{
-            headerShown: true
+            headerShown: true,
+            header: ({ navigation, route, options }) => (
+              <CustomWalletHeader
+                title={options.title || route.name}
+                navigation={navigation}
+                canGoBack={navigation.canGoBack()}
+              />
+            )
           }}
         />
       </Navigator>
