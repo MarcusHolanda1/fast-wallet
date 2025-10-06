@@ -7,16 +7,20 @@ interface PageContainerProps {
   children: React.ReactNode;
   showTitle?: boolean;
   showWalletHeader?: boolean;
+  showBackgroundImages?: boolean;
 }
 
 const PageContainer = ({
   children,
   showTitle = true,
-  showWalletHeader = false
+  showWalletHeader = false,
+  showBackgroundImages = true
 }: PageContainerProps) => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <BackgroundTopAppSvg style={styles.backgroundTopSvg} />
+      {showBackgroundImages && (
+        <BackgroundTopAppSvg style={styles.backgroundTopSvg} />
+      )}
 
       {showWalletHeader && (
         <View style={styles.walletHeader}>
@@ -28,7 +32,9 @@ const PageContainer = ({
         {showTitle && <Text style={styles.title}>Wallet Test</Text>}
         {children}
       </View>
-      <BackgroundBottomAppSvg style={styles.backgroundBottomSvg} />
+      {showBackgroundImages && (
+        <BackgroundBottomAppSvg style={styles.backgroundBottomSvg} />
+      )}
     </SafeAreaView>
   );
 };
