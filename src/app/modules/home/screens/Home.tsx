@@ -9,7 +9,7 @@ export default function HomeScreen() {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Fast wallet</Text>
       <Button
-        onPress={() => navigation.navigate('RegisterScreen')}
+        onPress={() => navigation.navigate('WalletScreen')}
         title="meus cartões"
         backgroundColor="red"
       />
