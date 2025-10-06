@@ -3,14 +3,17 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useAppNavigation } from '@app/shared/hooks/useNavigation';
 import { Toast } from 'toastify-react-native';
+import { useAppDispatch } from '@app/store/hooks';
+import { setCard } from '@app/shared/store/cardSlice';
 
 import { CardFormData, cardValidatorSchema } from '../constants/cardValidator';
 import { createCard } from '../services/card';
-import { CardPayload } from '../types/card';
+import { CardPayload } from '../../../shared/types/card';
 
 const useRegisterCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -32,9 +35,11 @@ const useRegisterCard = () => {
     };
 
     try {
-      await createCard(payload);
+      const response = await createCard(payload);
 
-      navigation.navigate('RegisterSuccessScreen');
+      dispatch(setCard(response.data));
+
+      navigation.navigate('RegisterSuccessScreen', { card: response.data });
     } catch (error) {
       Toast.error('Erro ao cadastrar cartão. Tente novamente.');
       return error;
