@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react-native';
 import { fillAndBlur } from '@app/shared/utils/helperTests';
 import { Toast } from 'toastify-react-native';
+import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 
 import { cardValidatorMessages } from '../../../constants/cardValidator';
 import FormRegisterCard from '../../FormRegisterCard';
@@ -19,7 +20,11 @@ const mockedCardData = generateFakeCardData();
 const mockCreateCard = jest.spyOn(cardService, 'createCard');
 
 const makeSut = (): RenderResult => {
-  return render(<FormRegisterCard />);
+  return render(
+    <TestWrapper>
+      <FormRegisterCard />
+    </TestWrapper>
+  );
 };
 
 describe('Form Register Card tests', () => {
