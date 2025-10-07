@@ -4,7 +4,6 @@ import { Card } from '@app/shared/types/card';
 
 interface CreditCardProps {
   card: Card;
-
   backgroundColor?: string;
   textColor?: string;
 }
@@ -35,11 +34,12 @@ export default function CreditCard({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: 180,
+    height: 200,
     width: '100%',
     borderRadius: 16,
     paddingHorizontal: 16,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 40,
     justifyContent: 'space-between',
     shadowColor: '#000',
     shadowOffset: {
@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   cardType: {
-    fontSize: theme.typography.h5.fontSize,
-    fontWeight: '600',
+    ...theme.typography.h5,
     marginBottom: 3
   },
   cardContent: {
@@ -60,17 +59,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   cardholderName: {
-    fontSize: theme.typography.p.fontSize,
-    fontWeight: '500',
+    ...theme.typography.p,
     marginBottom: 3
   },
   cardNumber: {
-    fontSize: 18,
-    fontWeight: '600',
-    letterSpacing: 2
+    ...theme.typography.pSmall,
+    marginBottom: 3
   },
   expiryDate: {
-    fontSize: 14,
-    fontWeight: '400'
+    ...theme.typography.pSmall
   }
 });
