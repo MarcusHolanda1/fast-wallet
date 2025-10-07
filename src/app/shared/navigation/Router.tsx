@@ -6,7 +6,7 @@ import WalletScreen from '@app/modules/wallet/screens/Wallet';
 import RegisterSuccessScreen from '@app/modules/register/screens/RegisterSuccessScreen';
 
 import { RootStackParamList } from './types';
-import { CustomTransparentHeader } from './CustomHeaders';
+import { CustomTransparentHeader } from './CustomTransparentHeaders';
 import { CustomWalletHeader } from './CustomWalletHeader';
 
 export const Routes = () => {
@@ -42,14 +42,16 @@ export const Routes = () => {
           name="RegisterScreen"
           component={RegisterScreen}
           options={{
-            headerShown: true
+            headerShown: true,
+            title: 'Cadastro'
           }}
         />
         <Screen
           name="RegisterSuccessScreen"
           component={RegisterSuccessScreen}
           options={{
-            headerShown: true
+            headerShown: true,
+            title: 'Cadastro'
           }}
         />
         <Screen
@@ -58,6 +60,7 @@ export const Routes = () => {
           options={{
             headerShown: false,
             headerTransparent: false,
+            title: 'Minha Carteira',
             header: ({ navigation, route, options }) => (
               <CustomWalletHeader
                 title={options.title || route.name}

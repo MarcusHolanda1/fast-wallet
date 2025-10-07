@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import GoBackSvg from '@assets/svgs/icons/go-back.svg';
 
 import { theme } from '../theme/theme';
 
@@ -21,7 +22,7 @@ export const CustomTransparentHeader = ({
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
-            <Text style={styles.backText}>←</Text>
+            <GoBackSvg />
           </TouchableOpacity>
         )}
         <Text style={styles.headerTitle}>{title}</Text>
@@ -45,10 +46,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: 8
-  },
-  backText: {
-    ...theme.typography.h3,
-    color: theme.colors.base.blueLight
   },
   headerTitle: {
     ...theme.typography.h3,

@@ -23,7 +23,7 @@ const PageContainer = ({
       )}
 
       <View style={styles.container}>
-        {showTitle && <Text style={styles.title}>Wallet Test</Text>}
+        {showTitle && <Text style={styles.title}>Fast Wallet</Text>}
         {children}
       </View>
       {showBackgroundRectangle && (
