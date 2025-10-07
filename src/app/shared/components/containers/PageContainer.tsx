@@ -7,7 +7,6 @@ import useResponsiveBackgroundRectangles from '@app/shared/hooks/useResponsiveBa
 interface PageContainerProps {
   children: React.ReactNode;
   showTitle?: boolean;
-  showWalletHeader?: boolean;
   showBackgroundRectangle?: boolean;
 }
 
