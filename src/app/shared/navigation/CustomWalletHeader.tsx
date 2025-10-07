@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 21,
     backgroundColor: theme.colors.base.white,
-    // iOS shadow:
     shadowColor: theme.colors.base.blueDark,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
