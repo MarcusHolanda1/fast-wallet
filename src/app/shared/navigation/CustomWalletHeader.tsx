@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '../theme/theme';
 
@@ -30,13 +30,16 @@ export const CustomWalletHeader = ({
           <Text style={styles.plusText}>+</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.walletHeader}>
+        <Text style={styles.myWalletText}>Meus cartões</Text>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: theme.colors.base.white
+    backgroundColor: theme.colors.base.blueDark
   },
   header: {
     flexDirection: 'row',
@@ -45,14 +48,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 21,
     backgroundColor: theme.colors.base.white,
+    // iOS shadow:
     shadowColor: theme.colors.base.blueDark,
-    shadowOffset: {
-      width: 0,
-      height: 10
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 1
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 6,
+    zIndex: 10,
+    marginBottom: 0.1
   },
   backButton: {
     padding: 8
@@ -65,9 +68,6 @@ const styles = StyleSheet.create({
     ...theme.typography.h3,
     color: theme.colors.base.blueDark
   },
-  rightSpace: {
-    width: 40
-  },
   plusButton: {
     padding: 8,
     width: 40,
@@ -77,5 +77,17 @@ const styles = StyleSheet.create({
     ...theme.typography.h3,
     color: theme.colors.base.blueLight,
     fontSize: 24
+  },
+  walletHeader: {
+    height: 66,
+    backgroundColor: theme.colors.base.white,
+    borderBottomEndRadius: 50,
+    borderBottomStartRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  myWalletText: {
+    ...theme.typography.h4,
+    color: theme.colors.base.blueLight
   }
 });
