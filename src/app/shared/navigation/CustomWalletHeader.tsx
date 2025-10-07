@@ -1,10 +1,5 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 import { theme } from '../theme/theme';
