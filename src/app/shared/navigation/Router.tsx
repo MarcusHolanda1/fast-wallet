@@ -56,7 +56,7 @@ export const Routes = () => {
           name="WalletScreen"
           component={WalletScreen}
           options={{
-            headerShown: true,
+            headerShown: false,
             headerTransparent: false,
             header: ({ navigation, route, options }) => (
               <CustomWalletHeader
