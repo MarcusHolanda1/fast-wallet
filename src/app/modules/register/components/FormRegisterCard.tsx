@@ -5,6 +5,7 @@ import { Controller } from 'react-hook-form';
 import { Masks } from 'react-native-mask-input';
 import { replaceWithTextOnly } from '@app/shared/utils/replaces';
 import { theme } from '@app/shared/theme/theme';
+import CameraSvg from '@assets/svgs/icons/camera.svg';
 
 import useRegisterCard from '../hooks/useRegisterCard';
 import { cardMask } from '../constants/masks';
@@ -28,6 +29,11 @@ const FormRegisterCard = () => {
             keyboardType="numeric"
             errorText={errors.cardNumber?.message}
             testID="card-number-input"
+            prefix={
+              <View style={{ marginRight: -6, marginLeft: 10 }}>
+                <CameraSvg width={24} height={24} />
+              </View>
+            }
           />
         )}
       />

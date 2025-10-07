@@ -24,6 +24,7 @@ export default function WalletScreen(): JSX.Element {
   const screenWidth = Dimensions.get('window').width;
   const paddingVertical = 60;
   const buttonWidth = screenWidth - paddingVertical;
+  const isLoadingWallet = isLoading || initialDelay;
 
   const handleSelectCard = (cardId: string) => {
     if (!selectedCardId) return setSelectedCardId(cardId);
@@ -36,20 +37,14 @@ export default function WalletScreen(): JSX.Element {
     return () => clearTimeout(timer);
   }, []);
 
-  const isBusy = isLoading || initialDelay;
-
   useEffect(() => {
-    navigation.setOptions({ headerShown: !isBusy });
-  }, [isBusy, navigation]);
+    navigation.setOptions({ headerShown: !isLoadingWallet });
+  }, [isLoadingWallet, navigation]);
 
-  if (isBusy) return <WalletLoading />;
+  if (isLoadingWallet) return <WalletLoading />;
 
   return (
-    <PageContainer
-      showWalletHeader
-      showTitle={false}
-      showBackgroundRectangle={false}
-    >
+    <PageContainer showTitle={false} showBackgroundRectangle={false}>
       <View style={styles.walletContainer}>
         {cards?.map((card, index) => (
           <AnimatedWalletCard

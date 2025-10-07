@@ -11,7 +11,7 @@ import Animated, {
   SharedValue
 } from 'react-native-reanimated';
 import { theme } from '@app/shared/theme/theme';
-import WalletSvg from '@assets/svgs/wallet.svg';
+import WalletSvg from '@assets/svgs/icons/wallet.svg';
 import useResponsiveBackgroundRectangles from '@app/shared/hooks/useResponsiveBackgroundRectangles';
 import type { StyleProp, ViewStyle } from 'react-native';
 

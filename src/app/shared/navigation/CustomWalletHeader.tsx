@@ -1,6 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import GoBackSvg from '@assets/svgs/icons/go-back.svg';
+import AddSvg from '@assets/svgs/icons/add-rounded.svg';
 
 import { theme } from '../theme/theme';
 
@@ -22,12 +24,12 @@ export const CustomWalletHeader = ({
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
-            <Text style={styles.backText}>←</Text>
+            <GoBackSvg />
           </TouchableOpacity>
         )}
         <Text style={styles.headerTitle}>Fast Wallet</Text>
         <TouchableOpacity onPress={onPlusPress} style={styles.plusButton}>
-          <Text style={styles.plusText}>+</Text>
+          <AddSvg />
         </TouchableOpacity>
       </View>
       <View style={styles.walletHeader}>

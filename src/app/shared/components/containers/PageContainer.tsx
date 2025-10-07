@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...theme.typography.h1,
-    fontWeight: 'regular',
     color: theme.colors.base.white,
     marginBottom: 30
   }

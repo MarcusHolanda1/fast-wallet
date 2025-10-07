@@ -16,6 +16,7 @@ interface InputTextProps extends Omit<TextInputProps, 'onChangeText'> {
   mask?: MaskInputProps['mask'];
   onChangeText?: (masked: string, unmasked: string) => void;
   errorText?: string;
+  prefix?: React.ReactNode;
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -25,6 +26,7 @@ const InputText: React.FC<InputTextProps> = ({
   label,
   mask,
   errorText,
+  prefix,
   onChangeText,
   ...props
 }) => {
@@ -32,6 +34,7 @@ const InputText: React.FC<InputTextProps> = ({
     <View>
       <Text style={styles.label}>{label}</Text>
       <View style={[styles.container, containerStyle]}>
+        {prefix}
         {mask ? (
           <MaskInput
             style={[styles.input, style]}
@@ -82,7 +85,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: theme.colors.alert.red,
-    fontSize: theme.typography.pSmall.fontSize
+    fontSize: theme.typography.pSmall.fontSize,
+    marginBottom: 4
   }
 });
 

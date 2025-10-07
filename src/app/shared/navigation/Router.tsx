@@ -62,6 +62,7 @@ export const Routes = () => {
               <CustomWalletHeader
                 title={options.title || route.name}
                 navigation={navigation}
+                onPlusPress={() => navigation.navigate('RegisterScreen')}
                 canGoBack={navigation.canGoBack()}
               />
             )
