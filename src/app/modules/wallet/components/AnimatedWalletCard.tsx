@@ -10,7 +10,7 @@ import CreditCard from '@app/shared/components/cards/CreditCard';
 import { theme } from '@app/shared/theme/theme';
 import { Card } from '@app/shared/types/card';
 
-const STACK_OFFSET = -112;
+const STACK_OFFSET = -150;
 const MOVE_DISTANCE = 40;
 const DURATION_SELECTED = 260;
 const DURATION_OTHER = 260;
@@ -37,7 +37,7 @@ export default function AnimatedWalletCard({
   const isSelected = selectedCardId === card.id;
   const isOther = !!selectedCardId && !isSelected;
   const backgroundColor = colors[index % colors.length];
-  const offset = !selectedCardId ? index * STACK_OFFSET : 0;
+  const offset = STACK_OFFSET;
   const screenWidth = Dimensions.get('window').width;
   const paddingVertical = 60;
   const cardWidth = screenWidth - paddingVertical;
@@ -67,7 +67,8 @@ export default function AnimatedWalletCard({
         right: 0,
         bottom: -180,
         width: cardWidth,
-        height: 180
+        height: 180,
+        opacity: 0.5
       }
     : { marginTop: offset, width: cardWidth, height: 180 };
 
