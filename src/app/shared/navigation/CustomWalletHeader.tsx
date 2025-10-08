@@ -20,7 +20,7 @@ export const CustomWalletHeader = ({
       <View style={styles.header}>
         {canGoBack && (
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('HomeScreen')}
             style={styles.backButton}
           >
             <GoBackSvg />
