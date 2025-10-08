@@ -4,7 +4,7 @@ import FormRegisterCard from '../components/FormRegisterCard';
 
 export default function RegisterScreen() {
   return (
-    <PageContainer>
+    <PageContainer showTitle={false}>
       <FormRegisterCard />
     </PageContainer>
   );
