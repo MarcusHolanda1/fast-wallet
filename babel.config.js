@@ -3,8 +3,17 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo', '@babel/preset-typescript'],
     plugins: [
-      'react-native-reanimated/plugin',
-      'module:@babel/plugin-transform-typescript'
+      [
+        'module-resolver',
+        {
+          extensions: ['.tsx', '.ts', '.js', '.json'],
+          root: ['./src'],
+          alias: {
+            '@': './src'
+          }
+        }
+      ],
+      'react-native-reanimated/plugin'
     ]
   };
 };
