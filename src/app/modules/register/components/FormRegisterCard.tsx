@@ -1,6 +1,6 @@
 import Button from '@shared/components/buttons/Button';
 import InputText from '@shared/components/inputs/InputText';
-import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { Masks } from 'react-native-mask-input';
 import { replaceWithTextOnly } from '@app/shared/utils/replaces';
@@ -8,9 +8,13 @@ import { theme } from '@app/shared/theme/theme';
 import CameraSvg from '@assets/svgs/icons/camera.svg';
 import { useHeaderHeight } from '@react-navigation/elements';
 import useKeyboardVisibility from '@app/shared/hooks/useKeyboardVisibility';
+import Animated from 'react-native-reanimated';
+import useSpringTranslateY from '@app/shared/hooks/useSpringTranslateY';
 
-import useRegisterCard from '../hooks/useRegisterCard';
 import { cardMask } from '../constants/masks';
+import useRegisterCard from '../hooks/useRegisterCard';
+const TITLE_MOVE_DISTANCE = 200;
+const TITLE_DURATION = 1000;
 
 const FormRegisterCard = () => {
   const { control, handleSubmit, errors, isValid, onSubmit, isLoading } =
@@ -19,6 +23,11 @@ const FormRegisterCard = () => {
 
   const keyboardIsVisible: boolean = useKeyboardVisibility();
 
+  const animatedTitleStyle = useSpringTranslateY(
+    TITLE_MOVE_DISTANCE,
+    TITLE_DURATION
+  );
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -26,7 +35,11 @@ const FormRegisterCard = () => {
       keyboardVerticalOffset={height - 70}
     >
       <View style={styles.centerContent}>
-        {!keyboardIsVisible && <Text style={styles.title}>Fast Wallet</Text>}
+        {!keyboardIsVisible && (
+          <Animated.Text style={[styles.title, animatedTitleStyle]}>
+            Fast Wallet
+          </Animated.Text>
+        )}
         <Controller
           control={control}
           name="cardNumber"

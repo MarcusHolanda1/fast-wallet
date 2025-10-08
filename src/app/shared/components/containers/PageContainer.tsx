@@ -1,14 +1,19 @@
 import { theme } from '@app/shared/theme/theme';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundRectangle from '@app/modules/wallet/components/BackgroundRectangle';
 import useResponsiveBackgroundRectangles from '@app/shared/hooks/useResponsiveBackgroundRectangles';
+import Animated from 'react-native-reanimated';
+import React from 'react';
+import useSpringTranslateY from '@app/shared/hooks/useSpringTranslateY';
 
 interface PageContainerProps {
   children: React.ReactNode;
   showTitle?: boolean;
   showBackgroundRectangle?: boolean;
 }
+const TITLE_MOVE_DISTANCE = 200;
+const TITLE_DURATION = 1000;
 
 const PageContainer = ({
   children,
@@ -16,6 +21,12 @@ const PageContainer = ({
   showBackgroundRectangle = true
 }: PageContainerProps) => {
   const { topStyle, bottomStyle } = useResponsiveBackgroundRectangles();
+
+  const animatedTitleStyle = useSpringTranslateY(
+    TITLE_MOVE_DISTANCE,
+    TITLE_DURATION
+  );
+
   return (
     <SafeAreaView style={styles.safeArea}>
       {showBackgroundRectangle && (
@@ -23,7 +34,14 @@ const PageContainer = ({
       )}
 
       <View style={styles.container}>
-        {showTitle && <Text style={styles.title}>Fast Wallet</Text>}
+        {showTitle && (
+          <Animated.Text
+            style={[styles.title, animatedTitleStyle]}
+            accessibilityRole="header"
+          >
+            Fast Wallet
+          </Animated.Text>
+        )}
         {children}
       </View>
       {showBackgroundRectangle && (
