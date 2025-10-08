@@ -61,9 +61,8 @@ export const Routes = () => {
             headerShown: false,
             headerTransparent: false,
             title: 'Minha Carteira',
-            header: ({ navigation, route, options }) => (
+            header: ({ navigation }) => (
               <CustomWalletHeader
-                title={options.title || route.name}
                 navigation={navigation}
                 onPlusPress={() => navigation.navigate('RegisterScreen')}
                 canGoBack={navigation.canGoBack()}
