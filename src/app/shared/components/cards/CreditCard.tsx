@@ -1,36 +1,31 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { theme } from '@shared/theme/theme';
+import { Card } from '@app/shared/types/card';
 
 interface CreditCardProps {
-  cardholderName: string;
-  cardNumber: string;
-  expiryDate: string;
-  cardType: string;
-  backgroundColor: string;
-  textColor: string;
+  card: Card;
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 export default function CreditCard({
-  cardholderName,
-  cardNumber,
-  expiryDate,
-  cardType,
+  card,
   backgroundColor,
   textColor
 }: CreditCardProps) {
   return (
     <View style={[styles.cardContainer, { backgroundColor: backgroundColor }]}>
-      <Text style={styles.cardType}>{cardType}</Text>
+      <Text style={[styles.cardType, { color: textColor }]}>{card.id}</Text>
 
       <View style={styles.cardContent}>
         <Text style={[styles.cardholderName, { color: textColor }]}>
-          {cardholderName}
+          {card.name}
         </Text>
         <Text style={[styles.cardNumber, { color: textColor }]}>
-          {cardNumber}
+          {card.number}
         </Text>
         <Text style={[styles.expiryDate, { color: textColor }]}>
-          Validade {expiryDate}
+          Validade {card.expires}
         </Text>
       </View>
     </View>
@@ -39,10 +34,12 @@ export default function CreditCard({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: 180,
+    height: 200,
+    width: '100%',
     borderRadius: 16,
     paddingHorizontal: 16,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 40,
     justifyContent: 'space-between',
     shadowColor: '#000',
     shadowOffset: {
@@ -54,8 +51,7 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   cardType: {
-    fontSize: theme.typography.h5.fontSize,
-    fontWeight: '600',
+    ...theme.typography.h5,
     marginBottom: 3
   },
   cardContent: {
@@ -63,17 +59,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   cardholderName: {
-    fontSize: theme.typography.p.fontSize,
-    fontWeight: '500',
+    ...theme.typography.p,
     marginBottom: 3
   },
   cardNumber: {
-    fontSize: 18,
-    fontWeight: '600',
-    letterSpacing: 2
+    ...theme.typography.pSmall,
+    marginBottom: 3
   },
   expiryDate: {
-    fontSize: 14,
-    fontWeight: '400'
+    ...theme.typography.pSmall
   }
 });

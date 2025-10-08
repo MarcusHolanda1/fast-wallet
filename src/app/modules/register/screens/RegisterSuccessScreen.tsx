@@ -1,9 +1,11 @@
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '@app/shared/theme/theme';
-import CreditCard from '@app/shared/components/cards/CreditCard';
 import Button from '@app/shared/components/buttons/Button';
 import { Card } from '@app/shared/types/card';
 import { useAppNavigation } from '@app/shared/hooks/useNavigation';
+import PageContainer from '@app/shared/components/containers/PageContainer';
+
+import CreditCard from '../../../shared/components/cards/CreditCard';
 
 export default function RegisterSuccessScreen({
   route
@@ -15,48 +17,38 @@ export default function RegisterSuccessScreen({
   const navigate = useAppNavigation();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#4444',
-        paddingHorizontal: 20,
-        paddingTop: 100,
-        paddingBottom: 40
-      }}
-    >
-      <Text
-        style={{
-          fontSize: theme.typography.h1.fontSize,
-          textAlign: 'center',
-          color: 'white',
-          marginBottom: 60
-        }}
-      >
-        Wallet Test
-      </Text>
-      <Text
-        style={{
-          fontSize: theme.typography.h1.fontSize,
-          textAlign: 'center',
-          color: 'white',
-          marginBottom: 60
-        }}
-      >
-        cartão cadastrado com sucesso
-      </Text>
+    <PageContainer showBackgroundRectangle showTitle>
+      <Text style={styles.title}>cartão cadastrado com sucesso</Text>
       <CreditCard
-        backgroundColor="red"
-        cardNumber={cardData.number}
-        cardholderName={cardData.name}
-        expiryDate={cardData.expires}
-        cardType="VISA"
-        textColor="#FFFFFF"
+        backgroundColor={theme.colors.text.black}
+        card={cardData}
+        textColor={theme.colors.base.white}
       />
-      <Button
-        title="avançar"
-        onPress={() => navigate.navigate('WalletScreen')}
-        backgroundColor={theme.colors.base.blueLight}
-      />
-    </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="avançar"
+          onPress={() => navigate.navigate('WalletScreen')}
+          backgroundColor={theme.colors.base.blueLight}
+        />
+      </View>
+    </PageContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.base.blueDark,
+    padding: 20,
+    justifyContent: 'space-between'
+  },
+  title: {
+    ...theme.typography.h4,
+    color: theme.colors.base.white,
+    marginBottom: 20
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: 30
+  }
+});

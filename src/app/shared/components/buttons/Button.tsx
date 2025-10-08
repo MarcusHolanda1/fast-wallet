@@ -30,11 +30,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <TouchableOpacity
-      style={[
-        styles.container,
-        { backgroundColor, width },
-        disabled && styles.disabled
-      ]}
+      style={[styles.container, { backgroundColor, width }]}
       onPress={onPress}
       disabled={disabled}
       testID={testID}
@@ -53,13 +49,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 55
   },
   text: {
-    fontSize: theme.typography.h5.fontSize,
-    fontWeight: '600'
-  },
-  disabled: {
-    opacity: 0.5
+    ...theme.typography.h5
   }
 });

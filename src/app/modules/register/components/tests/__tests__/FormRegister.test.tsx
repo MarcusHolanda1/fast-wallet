@@ -8,6 +8,7 @@ import { fillAndBlur } from '@app/shared/utils/helperTests';
 import { Toast } from 'toastify-react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 import { generateFakeCardData } from '@app/modules/register/__mocks__/registerMocks';
+import mockSvg from '@__mocks__/mockSvg';
 
 import { cardValidatorMessages } from '../../../constants/cardValidator';
 import FormRegisterCard from '../../FormRegisterCard';
@@ -16,6 +17,7 @@ import { mockCreateCardResponse } from '../__mocks__/FormRegisterMock';
 
 const mockedCardData = generateFakeCardData();
 const mockCreateCard = jest.spyOn(cardService, 'createCard');
+jest.mock('@assets/svgs/icons/camera.svg', () => mockSvg);
 
 const makeSut = (): RenderResult => {
   return render(

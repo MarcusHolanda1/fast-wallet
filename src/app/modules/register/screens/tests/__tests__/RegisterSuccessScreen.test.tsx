@@ -29,7 +29,7 @@ describe('Register Success Screen', () => {
 
   test('should render the success messages and button correctly', () => {
     expect(sut.getByText('cartão cadastrado com sucesso')).toBeTruthy();
-    expect(sut.getByText('Wallet Test')).toBeTruthy();
+    expect(sut.getByText('Fast Wallet')).toBeTruthy();
     expect(sut.getByText('avançar')).toBeTruthy();
   });
 
