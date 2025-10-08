@@ -37,6 +37,7 @@ export default function AnimatedWalletCard({
   const isSelected = selectedCardId === card.id;
   const isOther = !!selectedCardId && !isSelected;
   const isLastCard = index === totalCards - 1;
+  const shouldShowInOtherState = isOther ? isLastCard : true;
   const backgroundColor = colors[index % colors.length];
   const offset = isLastCard ? STACK_OFFSET / 1.4 : STACK_OFFSET;
   const screenWidth = Dimensions.get('window').width;
@@ -86,7 +87,7 @@ export default function AnimatedWalletCard({
         bottom: -180,
         width: cardWidth,
         height: 180,
-        opacity: 0.5
+        opacity: shouldShowInOtherState ? 0.5 : 0
       }
     : { marginTop: offset, width: cardWidth, height: 180 };
 
