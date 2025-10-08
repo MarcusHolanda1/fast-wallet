@@ -17,23 +17,24 @@ import type { StyleProp, ViewStyle } from 'react-native';
 
 import BackgroundRectangle from './BackgroundRectangle';
 
-const DESIGN_WIDTH: number = 390;
-const DESIGN_HEIGHT: number = 844;
-const RECT_BASE_WIDTH: number = 349.21;
-const RECT_BASE_HEIGHT: number = 800;
+const DESIGN_WIDTH = 390;
+const DESIGN_HEIGHT = 844;
+const RECT_BASE_WIDTH = 349.21;
+const RECT_BASE_HEIGHT = 800;
+const ANIMATE_DURATION = 500;
 
-const ROTATION_OVERSHOOT: number = 1.12;
+const ROTATION_OVERSHOOT = 1.12;
 
-const TOP_VERTICAL_FACTOR: number = 0.6;
-const TOP_HORIZONTAL_FACTOR: number = Platform.select({
+const TOP_VERTICAL_FACTOR = 0.6;
+const TOP_HORIZONTAL_FACTOR = Platform.select({
   ios: 0.6,
   android: 0.58
 })!;
-const BOTTOM_VERTICAL_FACTOR: number = Platform.select({
+const BOTTOM_VERTICAL_FACTOR = Platform.select({
   ios: 0.01,
   android: 0.06
 })!;
-const BOTTOM_HORIZONTAL_FACTOR: number = 0.45;
+const BOTTOM_HORIZONTAL_FACTOR = 0.45;
 
 interface BackgroundRectStyles {
   topStyle: StyleProp<ViewStyle>;
@@ -42,6 +43,7 @@ interface BackgroundRectStyles {
 
 export default function WalletLoading(): React.JSX.Element {
   const progress = useSharedValue<number>(0);
+  const walletScale = useSharedValue<number>(1);
   const { topStyle, bottomStyle }: BackgroundRectStyles =
     useResponsiveBackgroundRectangles({
       designWidth: DESIGN_WIDTH,
@@ -56,9 +58,9 @@ export default function WalletLoading(): React.JSX.Element {
       borderRadius: 40
     });
 
-  const MERGE_TRANSLATE: number = 140;
-  const PROGRESS_RANGE: [number, number] = [0, 1];
-  const SCALE_RANGE: [number, number] = [1, 1.25];
+  const MERGE_TRANSLATE = 140;
+  const PROGRESS_RANGE = [0, 1];
+  const SCALE_RANGE = [1, 1.25];
 
   function useMergeAnimStyle(
     progress: SharedValue<number>,
@@ -79,16 +81,38 @@ export default function WalletLoading(): React.JSX.Element {
     }, [targetTranslateY]);
   }
 
+  const walletAnimStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: walletScale.value
+        }
+      ]
+    };
+  });
+
   useEffect(() => {
     progress.value = withSequence(
-      withSpring(1, {
-        duration: 500,
-        dampingRatio: 0.33,
-        overshootClamping: false,
-        reduceMotion: ReduceMotion.System
-      })
+      withSpring(
+        1,
+        {
+          duration: ANIMATE_DURATION,
+          dampingRatio: 0.33,
+          overshootClamping: false,
+          reduceMotion: ReduceMotion.System
+        },
+        (finished) => {
+          if (finished) {
+            walletScale.value = withSpring(1.8, {
+              duration: 300,
+              dampingRatio: 0.6,
+              reduceMotion: ReduceMotion.System
+            });
+          }
+        }
+      )
     );
-  }, [progress]);
+  }, [progress, walletScale]);
 
   const topAnimStyle = useMergeAnimStyle(progress, MERGE_TRANSLATE);
   const bottomAnimStyle = useMergeAnimStyle(progress, -MERGE_TRANSLATE);
@@ -98,7 +122,9 @@ export default function WalletLoading(): React.JSX.Element {
       <Animated.View style={[styles.topStyle, topAnimStyle]}>
         <BackgroundRectangle rotation="-36deg" style={topStyle} />
       </Animated.View>
-      <WalletSvg />
+      <Animated.View style={walletAnimStyle}>
+        <WalletSvg />
+      </Animated.View>
       <Animated.View style={[styles.bottomStyle, bottomAnimStyle]}>
         <BackgroundRectangle rotation="-218deg" style={bottomStyle} />
       </Animated.View>
