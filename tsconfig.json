@@ -18,7 +18,9 @@
       "@shared": ["./src/app/shared"],
       "@shared/*": ["./src/app/shared/*"],
       "@assets": ["./src/assets"],
-      "@assets/*": ["./src/assets/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@__mocks__": ["./__mocks__"],
+      "@__mocks__/*": ["./__mocks__/*"]
     }
   }
 }
