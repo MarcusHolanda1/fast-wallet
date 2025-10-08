@@ -11,7 +11,6 @@ export const CustomWalletHeader = ({
   canGoBack,
   onPlusPress
 }: {
-  title: string;
   navigation: NavigationProp<ParamListBase>;
   canGoBack: boolean;
   onPlusPress?: () => void;
