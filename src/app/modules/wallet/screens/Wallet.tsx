@@ -3,7 +3,7 @@ import { useEffect, useState, JSX } from 'react';
 import { useAppSelector } from '@app/store/hooks';
 import { useAppNavigation } from '@app/shared/hooks/useAppNavigation';
 import PageContainer from '@app/shared/components/containers/PageContainer';
-import { theme } from '@app/shared/theme/theme';
+import { CARD_COLORS, theme } from '@app/shared/theme/theme';
 import Button from '@app/shared/components/buttons/Button';
 
 import WalletLoading from '../components/WalletLoading';
@@ -12,7 +12,6 @@ import useGetCards from '../hooks/useGetCards';
 import useWalletState from '../hooks/useWalletState';
 
 const LOADING_FAKE_DELAY = 3000;
-const CARD_COLORS = [theme.colors.base.greenLight, theme.colors.text.black];
 
 export default function WalletScreen(): JSX.Element {
   const [initialDelay, setInitialDelay] = useState<boolean>(true);

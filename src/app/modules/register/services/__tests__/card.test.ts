@@ -1,5 +1,5 @@
 import { createCard } from '../card';
-import { CARDS } from '../../../../shared/constants/endpoints';
+import { cardApi } from '../../../../shared/constants/endpoints';
 
 jest.mock('@app/shared/services/httpClient/httpClient', () => ({
   httpClient: {
@@ -31,7 +31,7 @@ describe('createCard service', () => {
     // eslint-disable-next-line @typescript-eslint/unbound-method -- httpClient.post is a jest mock (jest.fn), safe to reference directly
     const postMock = httpClient.post as jest.Mock;
     expect(postMock).toHaveBeenCalledTimes(1);
-    expect(postMock).toHaveBeenCalledWith(CARDS, { body: payload });
+    expect(postMock).toHaveBeenCalledWith(cardApi, { body: payload });
   });
 
   test('should return http response', async () => {

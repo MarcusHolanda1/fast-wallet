@@ -7,4 +7,8 @@ export const theme: AppTheme = {
   typography
 };
 
+export const CARD_COLORS = [
+  theme.colors.base.greenLight,
+  theme.colors.text.black
+];
 export type { AppTheme };

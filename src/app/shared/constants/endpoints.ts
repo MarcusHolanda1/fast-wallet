@@ -1,1 +1,1 @@
-export const CARDS = '/cards';
+export const cardApi = '/cards';
