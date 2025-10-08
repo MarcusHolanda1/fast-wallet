@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '@app/shared/theme/theme';
 import Button from '@app/shared/components/buttons/Button';
 import { Card } from '@app/shared/types/card';
-import { useAppNavigation } from '@app/shared/hooks/useNavigation';
+import { useAppNavigation } from '@app/shared/hooks/useAppNavigation';
 import PageContainer from '@app/shared/components/containers/PageContainer';
 
 import CreditCard from '../../../shared/components/cards/CreditCard';
