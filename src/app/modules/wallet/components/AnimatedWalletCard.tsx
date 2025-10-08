@@ -62,14 +62,6 @@ export default function AnimatedWalletCard({
         overshootClamping: true,
         reduceMotion: ReduceMotion.System
       });
-    } else if (isSelected) {
-      translateY.value = MOVE_DISTANCE;
-      translateY.value = withSpring(1, {
-        duration: DURATION_SELECTED,
-        dampingRatio: 0.5,
-        overshootClamping: true,
-        reduceMotion: ReduceMotion.System
-      });
     } else {
       translateY.value = MOVE_DISTANCE;
       translateY.value = withSpring(1, {
