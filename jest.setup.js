@@ -38,5 +38,10 @@ jest.mock('react-native-safe-area-context', () => {
   };
 });
 
+jest.mock('@react-navigation/elements', () => ({
+  ...jest.requireActual('@react-navigation/elements'),
+  useHeaderHeight: jest.fn(() => 0)
+}));
+
 global.mockNavigate = mockNavigate;
 global.mockGoBack = mockGoBack;
