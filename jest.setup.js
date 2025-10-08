@@ -43,5 +43,18 @@ jest.mock('@react-navigation/elements', () => ({
   useHeaderHeight: jest.fn(() => 0)
 }));
 
+jest.mock('react-native-reanimated', () => {
+  const ActualReanimated = jest.requireActual('react-native-reanimated/mock');
+  return {
+    ...ActualReanimated,
+    useSharedValue: jest.fn(() => ({ value: 0 })),
+    useAnimatedStyle: jest.fn(() => ({})),
+    withSpring: jest.fn((v) => v),
+    LinearTransition: { springify: jest.fn() },
+    ReduceMotion: { System: false },
+    createAnimatedComponent: (comp) => comp
+  };
+});
+
 global.mockNavigate = mockNavigate;
 global.mockGoBack = mockGoBack;
