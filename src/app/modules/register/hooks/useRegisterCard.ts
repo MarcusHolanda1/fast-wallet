@@ -43,7 +43,7 @@ const useRegisterCard = () => {
 
       navigation.navigate('RegisterSuccessScreen', { card: response.data });
     } catch (error) {
-      Toast.error('Erro ao cadastrar cartão. Tente novamente.');
+      Toast.error('Erro ao cadastrar cartão. Tente novamente');
       return error;
     } finally {
       setIsLoading(false);
