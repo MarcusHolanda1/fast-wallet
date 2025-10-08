@@ -36,7 +36,11 @@ export default function Button({
       testID={testID}
     >
       {isLoading ? (
-        <ActivityIndicator size="small" color={textColor} />
+        <ActivityIndicator
+          size="small"
+          color={textColor}
+          testID="activity-indicator"
+        />
       ) : (
         <Text style={[styles.text, { color: textColor }]}>{title}</Text>
       )}

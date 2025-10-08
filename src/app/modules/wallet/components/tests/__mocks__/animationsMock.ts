@@ -1,0 +1,4 @@
+export const TEST_STACK_OFFSET = -150;
+export const TEST_MOVE_DISTANCE = 200;
+export const TEST_DURATION_SELECTED = 1000;
+export const TEST_DURATION_OTHER = 1000;

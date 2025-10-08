@@ -7,13 +7,13 @@ import {
 import { fillAndBlur } from '@app/shared/utils/helperTests';
 import { Toast } from 'toastify-react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
-import { generateFakeCardData } from '@app/modules/register/__mocks__/registerMocks';
-import mockSvg from '@__mocks__/mockSvg';
 
+import mockSvg from '../../../../../../__mocks__/mockSvg';
 import { cardValidatorMessages } from '../../../constants/cardValidator';
 import FormRegisterCard from '../../FormRegisterCard';
 import * as cardService from '../../../services/card';
 import { mockCreateCardResponse } from '../__mocks__/FormRegisterMock';
+import { generateFakeCardData } from '../../../../../../__mocks__/card';
 
 const mockedCardData = generateFakeCardData();
 const mockCreateCard = jest.spyOn(cardService, 'createCard');

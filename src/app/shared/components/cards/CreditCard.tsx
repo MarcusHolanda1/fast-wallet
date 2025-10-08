@@ -6,15 +6,20 @@ interface CreditCardProps {
   card: Card;
   backgroundColor?: string;
   textColor?: string;
+  testID?: string;
 }
 
 export default function CreditCard({
   card,
   backgroundColor,
-  textColor
+  textColor,
+  testID
 }: CreditCardProps) {
   return (
-    <View style={[styles.cardContainer, { backgroundColor: backgroundColor }]}>
+    <View
+      testID={testID || `credit-card-${card.id}`}
+      style={[styles.cardContainer, { backgroundColor: backgroundColor }]}
+    >
       <Text style={[styles.cardType, { color: textColor }]}>{card.id}</Text>
 
       <View style={styles.cardContent}>

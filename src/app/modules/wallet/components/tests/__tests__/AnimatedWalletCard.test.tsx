@@ -1,8 +1,8 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 import { Card } from '@app/shared/types/card';
+import RegisterSuccessScreen from '@app/modules/register/screens/RegisterSuccessScreen';
 
-import RegisterSuccessScreen from '../../RegisterSuccessScreen';
 import { generateFakeCardData } from '../../../../../../__mocks__/card';
 
 const mockFakeCard = generateFakeCardData();

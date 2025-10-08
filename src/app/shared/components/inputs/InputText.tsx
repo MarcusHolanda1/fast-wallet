@@ -51,7 +51,11 @@ const InputText: React.FC<InputTextProps> = ({
         )}
         {icon && <View style={styles.iconContainer}>{icon}</View>}
       </View>
-      <Text style={styles.errorText}>{errorText}</Text>
+      {errorText && (
+        <Text style={styles.errorText} testID="error-text">
+          {errorText}
+        </Text>
+      )}
     </View>
   );
 };

@@ -110,6 +110,7 @@ export default function AnimatedWalletCard({
         { zIndex: isSelected ? 100 : totalCards + index },
         animatedStyle
       ]}
+      testID={'animated-wallet-card'}
     >
       <CreditCard
         card={card}
