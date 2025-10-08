@@ -104,6 +104,7 @@ export default function AnimatedWalletCard({
       accessibilityLabel="Cartão"
       layout={LinearTransition.springify()}
       onPress={onPress}
+      activeOpacity={0.7}
       style={[
         baseStyle,
         { zIndex: isSelected ? 100 : totalCards + index },
