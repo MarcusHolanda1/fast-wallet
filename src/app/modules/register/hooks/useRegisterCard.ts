@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useAppNavigation } from '@app/shared/hooks/useNavigation';
+import { useAppNavigation } from '@app/shared/hooks/useAppNavigation';
 import { Toast } from 'toastify-react-native';
 import { useAppDispatch } from '@app/store/hooks';
 import { setCard } from '@app/shared/store/cardSlice';
