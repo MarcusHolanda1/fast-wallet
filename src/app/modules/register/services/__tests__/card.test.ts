@@ -44,7 +44,7 @@ describe('createCard service', () => {
     expect(result).toEqual(mockedResponse);
   });
 
-  test('should propagate errors', async () => {
+  test('should return errors', async () => {
     (httpClient.post as jest.Mock).mockRejectedValueOnce(
       new Error('Network error')
     );
