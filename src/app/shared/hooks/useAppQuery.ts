@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
-type useAppQueryReturn<Data> = {
-  data?: Data;
+type useAppQueryReturn<DataT> = {
+  data?: DataT;
   isLoading: boolean;
 
   error: unknown;
 };
 
-export function useAppQuery<Data>(
-  fetchData: () => Promise<Data>
-): useAppQueryReturn<Data> {
-  const [data, setData] = useState<Data>();
+export function useAppQuery<DataT>(
+  fetchData: () => Promise<DataT>
+): useAppQueryReturn<DataT> {
+  const [data, setData] = useState<DataT>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
 
