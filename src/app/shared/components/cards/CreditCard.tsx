@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { theme } from '@shared/theme/theme';
 import { Card } from '@app/shared/types/card';
+import { formatCardNumber } from '@app/shared/utils/replaces';
+
+import MaskedCardNumber from './MaskedCardNumber';
 
 interface CreditCardProps {
   card: Card;
@@ -26,9 +29,13 @@ export default function CreditCard({
         <Text style={[styles.cardholderName, { color: textColor }]}>
           {card.name}
         </Text>
-        <Text style={[styles.cardNumber, { color: textColor }]}>
-          {card.number}
-        </Text>
+        <MaskedCardNumber
+          number={card.number}
+          formattedVisible={formatCardNumber(card.number)}
+          color={textColor || '#FFFFFF'}
+          testIDPrefix={`credit-card-${card.id}-number`}
+          style={styles.cardNumber}
+        />
         <Text style={[styles.expiryDate, { color: textColor }]}>
           Validade {card.expires}
         </Text>
@@ -69,7 +76,8 @@ const styles = StyleSheet.create({
   },
   cardNumber: {
     ...theme.typography.pSmall,
-    marginBottom: 3
+    marginBottom: 3,
+    letterSpacing: 1
   },
   expiryDate: {
     ...theme.typography.pSmall

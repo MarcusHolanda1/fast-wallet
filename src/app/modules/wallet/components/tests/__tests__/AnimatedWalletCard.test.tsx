@@ -2,6 +2,7 @@ import { fireEvent, render, RenderResult } from '@testing-library/react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 import { Card } from '@app/shared/types/card';
 import RegisterSuccessScreen from '@app/modules/register/screens/RegisterSuccessScreen';
+import { expectFormattedCardNumber } from '@app/shared/utils/helperTests';
 
 import { generateFakeCardData } from '../../../../../../__mocks__/card';
 
@@ -34,7 +35,9 @@ describe('Register Success Screen', () => {
   });
 
   test('should display the credit card with correct details', () => {
-    expect(sut.getByText(mockFakeCard.number)).toBeTruthy();
+    expect(
+      sut.getByText(expectFormattedCardNumber(mockFakeCard.number))
+    ).toBeTruthy();
     expect(sut.getByText(mockFakeCard.name)).toBeTruthy();
     expect(sut.getByText(`Validade ${mockFakeCard.expires}`)).toBeTruthy();
   });

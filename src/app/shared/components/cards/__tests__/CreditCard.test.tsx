@@ -1,6 +1,7 @@
 import { render, RenderResult } from '@testing-library/react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 import { Card } from '@app/shared/types/card';
+import { expectFormattedCardNumber } from '@app/shared/utils/helperTests';
 
 import { generateFakeCardData } from '../../../../../__mocks__/card';
 import CreditCard from '../CreditCard';
@@ -33,7 +34,9 @@ describe('Credit card', () => {
 
   test('should render the credit card with correct details', () => {
     expect(sut.getByText(mockFakeCard.id)).toBeTruthy();
-    expect(sut.getByText(mockFakeCard.number)).toBeTruthy();
+    expect(
+      sut.getByText(expectFormattedCardNumber(mockFakeCard.number))
+    ).toBeTruthy();
     expect(sut.getByText(mockFakeCard.name)).toBeTruthy();
     expect(sut.getByText(`Validade ${mockFakeCard.expires}`)).toBeTruthy();
   });
@@ -44,8 +47,12 @@ describe('Credit card', () => {
     });
 
     expect(sut.getByText(mockFakeCard.id)).toHaveStyle({ color: textColor });
-    expect(sut.getByText(mockFakeCard.name)).toHaveStyle({ color: textColor });
-    expect(sut.getByText(mockFakeCard.number)).toHaveStyle({
+    expect(sut.getByText(mockFakeCard.name)).toHaveStyle({
+      color: textColor
+    });
+    expect(
+      sut.getByText(expectFormattedCardNumber(mockFakeCard.number))
+    ).toHaveStyle({
       color: textColor
     });
     expect(sut.getByText(`Validade ${mockFakeCard.expires}`)).toHaveStyle({

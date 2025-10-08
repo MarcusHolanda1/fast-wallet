@@ -8,3 +8,7 @@ export const fillAndBlur = (
   fireEvent.changeText(sut.getByTestId(testId), value);
   fireEvent(sut.getByTestId(testId), 'blur');
 };
+
+export const expectFormattedCardNumber = (cardNumber: string) => {
+  return '•••• •••• •••• ' + cardNumber.slice(-4);
+};
