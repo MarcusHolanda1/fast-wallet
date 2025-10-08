@@ -18,12 +18,23 @@ export default function CreditCard({
   textColor,
   testID
 }: CreditCardProps) {
+  const renderCardNameByBackgroundColor = () => {
+    if (!backgroundColor) return card.name;
+
+    if (backgroundColor === theme.colors.base.greenLight) {
+      return 'Green';
+    }
+    return 'Black';
+  };
+
   return (
     <View
       testID={testID || `credit-card-${card.id}`}
       style={[styles.cardContainer, { backgroundColor: backgroundColor }]}
     >
-      <Text style={[styles.cardType, { color: textColor }]}>{card.id}</Text>
+      <Text style={[styles.cardType, { color: textColor }]}>
+        {renderCardNameByBackgroundColor()}
+      </Text>
 
       <View style={styles.cardContent}>
         <Text style={[styles.cardholderName, { color: textColor }]}>

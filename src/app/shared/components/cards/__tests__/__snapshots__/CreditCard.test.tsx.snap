@@ -22,7 +22,7 @@ exports[`Credit card should match snapshot 1`] = `
         "width": "100%",
       },
       {
-        "backgroundColor": "#000",
+        "backgroundColor": "#A5FF32",
       },
     ]
   }
@@ -43,7 +43,7 @@ exports[`Credit card should match snapshot 1`] = `
       ]
     }
   >
-    1
+    Green
   </Text>
   <View
     style={
