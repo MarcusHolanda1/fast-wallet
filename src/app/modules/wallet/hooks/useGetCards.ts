@@ -2,7 +2,7 @@ import { useAppDispatch } from '@app/store/hooks';
 import { useCallback, useEffect, useState } from 'react';
 import { setCards } from '@app/shared/store/cardSlice';
 import { Toast } from 'toastify-react-native';
-import { useAppNavigation } from '@app/shared/hooks/useNavigation';
+import { useAppNavigation } from '@app/shared/hooks/useAppNavigation';
 
 import { getCards } from '../services/card';
 
