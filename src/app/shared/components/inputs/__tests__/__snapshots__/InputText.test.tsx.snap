@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputText Component should match snapshot 1`] = `
+<View>
+  <Text
+    style={
+      {
+        "color": "#BBBBBB",
+        "fontSize": 14,
+      }
+    }
+  >
+    Snapshot Label
+  </Text>
+  <View
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#EEEEEE",
+          "borderRadius": 6,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 45,
+          "marginVertical": 8,
+        },
+        {
+          "padding": 10,
+        },
+      ]
+    }
+  >
+    <Text>
+      $
+    </Text>
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="Snapshot Placeholder"
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "color": "#111111",
+            "flex": 1,
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 18,
+            "paddingHorizontal": 16,
+          },
+          {
+            "fontSize": 18,
+          },
+        ]
+      }
+      value=""
+    />
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginRight": 12,
+        }
+      }
+    >
+      <Text>
+        Icon
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      {
+        "color": "#FF0000",
+        "fontSize": 14,
+        "marginBottom": 4,
+      }
+    }
+    testID="error-text"
+  >
+    Snapshot Error
+  </Text>
+</View>
+`;

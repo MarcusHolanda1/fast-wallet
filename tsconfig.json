@@ -1,6 +1,11 @@
 {
   "extends": "expo/tsconfig.base",
-  "include": ["src/**/*", "App.tsx", "index.ts"],
+  "include": [
+    "src/**/*",
+    "App.tsx",
+    "index.ts",
+    "src/app/shared/types/global.d.ts"
+  ],
   "compilerOptions": {
     "jsx": "react-jsx",
     "strict": true,
@@ -11,7 +16,9 @@
       "@modules": ["./src/app/modules"],
       "@modules/*": ["./src/app/modules/*"],
       "@shared": ["./src/app/shared"],
-      "@shared/*": ["./src/app/shared/*"]
+      "@shared/*": ["./src/app/shared/*"],
+      "@assets": ["./src/assets"],
+      "@assets/*": ["./src/assets/*"]
     }
   }
 }

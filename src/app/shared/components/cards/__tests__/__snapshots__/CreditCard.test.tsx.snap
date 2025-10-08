@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Credit card should match snapshot 1`] = `
+<View
+  style={
+    [
+      {
+        "borderRadius": 16,
+        "elevation": 8,
+        "height": 200,
+        "justifyContent": "space-between",
+        "paddingBottom": 40,
+        "paddingHorizontal": 16,
+        "paddingTop": 30,
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 4,
+          "width": 0,
+        },
+        "shadowOpacity": 0.3,
+        "shadowRadius": 8,
+        "width": "100%",
+      },
+      {
+        "backgroundColor": "#000",
+      },
+    ]
+  }
+  testID="credit-card-1"
+>
+  <Text
+    style={
+      [
+        {
+          "fontSize": 18,
+          "fontWeight": "400",
+          "lineHeight": 20,
+          "marginBottom": 3,
+        },
+        {
+          "color": "#fff",
+        },
+      ]
+    }
+  >
+    1
+  </Text>
+  <View
+    style={
+      {
+        "flex": 1,
+        "justifyContent": "flex-end",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 18,
+            "marginBottom": 3,
+          },
+          {
+            "color": "#fff",
+          },
+        ]
+      }
+    >
+      MARCUS HOLANDA
+    </Text>
+    <Text
+      accessibilityLabel="Final 1111"
+      style={
+        [
+          {
+            "color": "#fff",
+          },
+          {
+            "fontSize": 14,
+            "fontWeight": "400",
+            "letterSpacing": 1,
+            "lineHeight": 16,
+            "marginBottom": 3,
+          },
+        ]
+      }
+      testID="credit-card-1-number"
+    >
+      •••• •••• •••• 1111
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "fontSize": 14,
+            "fontWeight": "400",
+            "lineHeight": 16,
+          },
+          {
+            "color": "#fff",
+          },
+        ]
+      }
+    >
+      Validade 
+      12/30
+    </Text>
+  </View>
+</View>
+`;

@@ -1,63 +1,165 @@
 import Button from '@shared/components/buttons/Button';
 import InputText from '@shared/components/inputs/InputText';
-import { useAppNavigation } from '@shared/hooks/useNavigation';
-import { theme } from '@shared/theme/theme';
-import { Text, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { Masks } from 'react-native-mask-input';
+import { replaceWithTextOnly } from '@app/shared/utils/replaces';
+import { theme } from '@app/shared/theme/theme';
+import CameraSvg from '@assets/svgs/icons/camera.svg';
+import { useHeaderHeight } from '@react-navigation/elements';
+import useKeyboardVisibility from '@app/shared/hooks/useKeyboardVisibility';
+import Animated from 'react-native-reanimated';
+import useSpringTranslateY from '@app/shared/hooks/useSpringTranslateY';
+
+import { cardMask } from '../constants/masks';
+import useRegisterCard from '../hooks/useRegisterCard';
+const TITLE_MOVE_DISTANCE = 200;
+const TITLE_DURATION = 1000;
 
 const FormRegisterCard = () => {
-  const navigation = useAppNavigation();
+  const { control, handleSubmit, errors, isValid, onSubmit, isLoading } =
+    useRegisterCard();
+  const height = useHeaderHeight();
+
+  const keyboardIsVisible: boolean = useKeyboardVisibility();
+
+  const animatedTitleStyle = useSpringTranslateY(
+    TITLE_MOVE_DISTANCE,
+    TITLE_DURATION
+  );
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#121212',
-        paddingHorizontal: 20,
-        paddingTop: 100,
-        paddingBottom: 40
-      }}
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={{ flex: 1, width: '100%' }}
+      keyboardVerticalOffset={height - 70}
     >
-      <Text
-        style={{
-          fontSize: theme.typography.h1.fontSize,
-          textAlign: 'center',
-          color: 'white',
-          marginBottom: 60
-        }}
-      >
-        Wallet Test
-      </Text>
-
-      <View style={{ flex: 1 }}>
-        <InputText label="número do cartão" style={{ marginBottom: 20 }} />
-        <InputText
-          label="nome do titular do cartão"
-          style={{ marginBottom: 20 }}
+      <View style={styles.centerContent}>
+        {!keyboardIsVisible && (
+          <Animated.Text style={[styles.title, animatedTitleStyle]}>
+            Fast Wallet
+          </Animated.Text>
+        )}
+        <Controller
+          control={control}
+          name="cardNumber"
+          render={({ field: { onChange, value } }) => (
+            <InputText
+              label="número do cartão"
+              value={value}
+              onChangeText={(_, unmasked) => onChange(unmasked)}
+              mask={Masks.CREDIT_CARD}
+              placeholder="XXXX XXXX XXXX XXXX"
+              keyboardType="numeric"
+              errorText={errors.cardNumber?.message}
+              testID="card-number-input"
+              prefix={
+                <View style={{ marginRight: -6, marginLeft: 10 }}>
+                  <CameraSvg width={24} height={24} />
+                </View>
+              }
+            />
+          )}
         />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 40
-          }}
-        >
-          <View style={{ flex: 0.45 }}>
-            <InputText label="vencimento" placeholder="00/00" />
+        <Controller
+          control={control}
+          name="cardHolder"
+          render={({ field: { onChange, value } }) => (
+            <InputText
+              label="nome do titular do cartão"
+              value={value}
+              onChangeText={(text) => {
+                onChange(replaceWithTextOnly(text));
+              }}
+              keyboardType="default"
+              autoCapitalize="words"
+              errorText={errors.cardHolder?.message}
+              testID="card-holder-input"
+            />
+          )}
+        />
+        <View style={styles.rowContainer}>
+          <View style={styles.halfWidth}>
+            <Controller
+              control={control}
+              name="expiryDate"
+              render={({ field: { onChange, value } }) => (
+                <InputText
+                  label="vencimento"
+                  placeholder="00/00"
+                  value={value}
+                  onChangeText={(masked, _) => onChange(masked)}
+                  mask={cardMask.expiryDate}
+                  keyboardType="numeric"
+                  errorText={errors.expiryDate?.message}
+                  testID="expiry-date-input"
+                />
+              )}
+            />
           </View>
-          <View style={{ flex: 0.45 }}>
-            <InputText label="código de segurança" placeholder="***" />
+          <View style={styles.halfWidth}>
+            <Controller
+              control={control}
+              name="cvv"
+              render={({ field: { onChange, value } }) => (
+                <InputText
+                  label="código de segurança"
+                  placeholder="***"
+                  value={value}
+                  onChangeText={(_, unmasked) => onChange(unmasked)}
+                  mask={cardMask.cvv}
+                  errorText={errors.cvv?.message}
+                  keyboardType="numeric"
+                  testID="cvv-input"
+                />
+              )}
+            />
           </View>
         </View>
+        <Button
+          width="auto"
+          onPress={() => void handleSubmit(onSubmit)()}
+          title="avançar"
+          backgroundColor={
+            isValid ? theme.colors.base.blueLight : theme.colors.base.greyLight
+          }
+          disabled={!isValid || isLoading}
+          isLoading={isLoading}
+          testID="submit-register-card-button"
+          textColor={isValid ? theme.colors.base.white : theme.colors.text.grey}
+        />
       </View>
-
-      <Button
-        onPress={() => navigation.navigate('RegisterScreen')}
-        title="avançar"
-        backgroundColor="red"
-      />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  centerContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    width: '100%',
+    paddingVertical: 20
+  },
+  container: {
+    flex: 1,
+    width: '100%'
+  },
+  title: {
+    ...theme.typography.h1,
+    color: theme.colors.base.white,
+    marginBottom: 30,
+    textAlign: 'center'
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 40,
+    width: '100%'
+  },
+  halfWidth: {
+    flex: 0.45
+  }
+});
 
 export default FormRegisterCard;

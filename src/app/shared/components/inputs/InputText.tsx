@@ -7,11 +7,16 @@ import {
   TextInputProps,
   Text
 } from 'react-native';
+import MaskInput, { MaskInputProps } from 'react-native-mask-input';
 
-interface InputTextProps extends TextInputProps {
+interface InputTextProps extends Omit<TextInputProps, 'onChangeText'> {
   icon?: React.ReactNode;
   containerStyle?: object;
   label: string;
+  mask?: MaskInputProps['mask'];
+  onChangeText?: (masked: string, unmasked: string) => void;
+  errorText?: string;
+  prefix?: React.ReactNode;
 }
 
 const InputText: React.FC<InputTextProps> = ({
@@ -19,42 +24,73 @@ const InputText: React.FC<InputTextProps> = ({
   containerStyle,
   style,
   label,
+  mask,
+  errorText,
+  prefix,
+  onChangeText,
   ...props
 }) => {
   return (
     <View>
       <Text style={styles.label}>{label}</Text>
       <View style={[styles.container, containerStyle]}>
-        <TextInput style={[styles.input, style]} {...props} />
+        {prefix}
+        {mask ? (
+          <MaskInput
+            style={[styles.input, style]}
+            mask={mask}
+            onChangeText={onChangeText}
+            {...props}
+          />
+        ) : (
+          <TextInput
+            style={[styles.input, style]}
+            onChangeText={(text) => onChangeText?.(text, text)}
+            {...props}
+          />
+        )}
         {icon && <View style={styles.iconContainer}>{icon}</View>}
       </View>
+      {errorText && (
+        <Text style={styles.errorText} testID="error-text">
+          {errorText}
+        </Text>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
+    height: 45,
+    borderRadius: 6,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginVertical: 8
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: theme.colors.base.greyLight,
+    backgroundColor: theme.colors.base.white
   },
   input: {
-    flex: 1,
-    fontSize: 16,
+    ...theme.typography.p,
     color: theme.colors.text.black,
-    backgroundColor: theme.colors.base.greyLight
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
+    flex: 1
   },
   iconContainer: {
-    marginLeft: 12,
+    marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center'
   },
   label: {
     color: theme.colors.text.grey,
     fontSize: theme.typography.pSmall.fontSize
+  },
+  errorText: {
+    color: theme.colors.alert.red,
+    fontSize: theme.typography.pSmall.fontSize,
+    marginBottom: 4
   }
 });
 
