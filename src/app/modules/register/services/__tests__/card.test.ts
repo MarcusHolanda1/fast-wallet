@@ -28,8 +28,10 @@ describe('createCard service', () => {
 
     await createCard(payload);
 
-    expect(httpClient.post).toHaveBeenCalledTimes(1);
-    expect(httpClient.post).toHaveBeenCalledWith(CARDS, { body: payload });
+    // eslint-disable-next-line @typescript-eslint/unbound-method -- httpClient.post is a jest mock (jest.fn), safe to reference directly
+    const postMock = httpClient.post as jest.Mock;
+    expect(postMock).toHaveBeenCalledTimes(1);
+    expect(postMock).toHaveBeenCalledWith(CARDS, { body: payload });
   });
 
   test('should return http response', async () => {
