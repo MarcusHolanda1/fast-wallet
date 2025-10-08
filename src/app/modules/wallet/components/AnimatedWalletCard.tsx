@@ -16,10 +16,16 @@ const MOVE_DISTANCE = 200;
 const DURATION_SELECTED = 1000;
 const DURATION_OTHER = 1000;
 
+interface CardState {
+  isSelected: boolean;
+  isOther: boolean;
+  shouldShow: boolean;
+}
+
 interface AnimatedWalletCardProps {
   card: Card;
   index: number;
-  selectedCardId: string | null;
+  cardState: CardState;
   totalCards: number;
   colors: string[];
   onPress: () => void;
@@ -28,16 +34,14 @@ interface AnimatedWalletCardProps {
 export default function AnimatedWalletCard({
   card,
   index,
-  selectedCardId,
+  cardState,
   totalCards,
   colors,
   onPress
 }: AnimatedWalletCardProps) {
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-  const isSelected = selectedCardId === card.id;
-  const isOther = !!selectedCardId && !isSelected;
+  const { isSelected, isOther, shouldShow } = cardState;
   const isLastCard = index === totalCards - 1;
-  const shouldShowInOtherState = isOther ? isLastCard : true;
   const backgroundColor = colors[index % colors.length];
   const offset = isLastCard ? STACK_OFFSET / 1.4 : STACK_OFFSET;
   const screenWidth = Dimensions.get('window').width;
@@ -87,14 +91,14 @@ export default function AnimatedWalletCard({
         bottom: -180,
         width: cardWidth,
         height: 180,
-        opacity: shouldShowInOtherState ? 0.5 : 0
+        opacity: shouldShow ? 0.4 : 0
       }
     : { marginTop: offset, width: cardWidth, height: 180 };
 
   return (
     <AnimatedTouchable
       accessibilityRole="button"
-      accessibilityLabel="Cartão"
+      accessibilityLabel="Card"
       layout={LinearTransition.springify()}
       onPress={onPress}
       activeOpacity={0.7}
