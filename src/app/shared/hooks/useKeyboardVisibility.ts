@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 import { Keyboard, EmitterSubscription } from 'react-native';
 
 const useKeyboardVisibility = (): boolean => {
-  const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const handleKeyboardDidShow = (): void => {
-      setKeyboardVisible(true);
+      setIsKeyboardVisible(true);
     };
 
     const handleKeyboardDidHide = (): void => {
-      setKeyboardVisible(false);
+      setIsKeyboardVisible(false);
     };
 
     const keyboardDidShowListener: EmitterSubscription = Keyboard.addListener(
