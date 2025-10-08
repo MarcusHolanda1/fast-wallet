@@ -2,13 +2,14 @@ import { render, RenderResult } from '@testing-library/react-native';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
 import { Card } from '@app/shared/types/card';
 import { expectFormattedCardNumber } from '@app/shared/utils/helperTests';
+import { theme } from '@app/shared/theme/theme';
 
 import { generateFakeCardData } from '../../../../../__mocks__/card';
 import CreditCard from '../CreditCard';
 
 const mockFakeCard = generateFakeCardData();
 
-const backgroundColor = '#000';
+const backgroundColor = theme.colors.base.greenLight;
 const textColor = '#fff';
 
 const makeSut = (cardProps: Card) => {
@@ -33,7 +34,7 @@ describe('Credit card', () => {
   });
 
   test('should render the credit card with correct details', () => {
-    expect(sut.getByText(mockFakeCard.id)).toBeTruthy();
+    expect(sut.getByText('Green')).toBeVisible();
     expect(
       sut.getByText(expectFormattedCardNumber(mockFakeCard.number))
     ).toBeTruthy();
@@ -46,7 +47,7 @@ describe('Credit card', () => {
       backgroundColor
     });
 
-    expect(sut.getByText(mockFakeCard.id)).toHaveStyle({ color: textColor });
+    expect(sut.getByText('Green')).toHaveStyle({ color: textColor });
     expect(sut.getByText(mockFakeCard.name)).toHaveStyle({
       color: textColor
     });

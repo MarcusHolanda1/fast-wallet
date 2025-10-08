@@ -74,4 +74,4 @@ export class FetchHttpClient implements HttpClient {
   }
 }
 
-export const httpClient = new FetchHttpClient('http://localhost:3000');
+export const httpClient = new FetchHttpClient(process.env.EXPO_PUBLIC_API_URL);

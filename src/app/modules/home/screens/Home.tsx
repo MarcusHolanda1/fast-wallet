@@ -1,7 +1,7 @@
 import PageContainer from '@app/shared/components/containers/PageContainer';
 import { theme } from '@app/shared/theme/theme';
 import Button from '@shared/components/buttons/Button';
-import { useAppNavigation } from '@shared/hooks/useNavigation';
+import { useAppNavigation } from '@app/shared/hooks/useAppNavigation';
 import { View } from 'react-native';
 
 export default function HomeScreen() {

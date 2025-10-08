@@ -1,6 +1,7 @@
+import { jest } from '@jest/globals';
+
 declare global {
   const mockNavigate: jest.Mock;
-
   const mockGoBack: jest.Mock;
 }
 
@@ -11,4 +12,4 @@ declare module '*.svg' {
   export default content;
 }
 
-export { __global };
+export {};

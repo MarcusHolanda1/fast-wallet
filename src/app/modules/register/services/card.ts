@@ -1,7 +1,7 @@
 import { httpClient } from '@app/shared/services/httpClient/httpClient';
 import { HttpResponse } from '@app/shared/services/httpClient/types';
 
-import { CARDS } from '../../../shared/constants/endpoints';
+import { cardApi } from '../../../shared/constants/endpoints';
 import { Card } from '../../../shared/types/card';
 
 export const createCard = async (payload: {
@@ -9,7 +9,7 @@ export const createCard = async (payload: {
   cvv: string;
   name: string;
 }): Promise<HttpResponse<Card>> => {
-  const response = await httpClient.post<Card>(CARDS, {
+  const response = await httpClient.post<Card>(cardApi, {
     body: payload
   });
 
