@@ -8,7 +8,8 @@
     "eslint.config.mjs",
     "jest.config.js",
     "jest.setup.js",
-    "metro.config.js"
+    "metro.config.js",
+    "expo-env.d.ts"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
