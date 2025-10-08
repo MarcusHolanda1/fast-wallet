@@ -55,9 +55,16 @@ npx json-server db.json
 npx run start:dev
 ```
 
+### 6. Para rodar os testes
+
+```
+npm run test:coverage
+```
+
 ### Estrutura do projeto
 
 ```
+
 ├── mocks
 └── app
 ├── modules
@@ -67,4 +74,5 @@ npx run start:dev
 ├── shared
 ├── store
 └── assets
+
 ```
