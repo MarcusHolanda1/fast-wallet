@@ -11,7 +11,7 @@ import AnimatedWalletCard from '../components/AnimatedWalletCard';
 import useGetCards from '../hooks/useGetCards';
 import useWalletState from '../hooks/useWalletState';
 
-const LOADING_FAKE_DELAY = 3000;
+const LOADING_FAKE_DELAY = 2000;
 
 export default function WalletScreen(): JSX.Element {
   const [initialDelay, setInitialDelay] = useState<boolean>(true);
