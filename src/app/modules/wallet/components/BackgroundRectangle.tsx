@@ -1,5 +1,5 @@
 import { theme } from '@app/shared/theme/theme';
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 
 interface BackgroundRectangleProps {
