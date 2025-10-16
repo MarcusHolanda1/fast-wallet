@@ -6,7 +6,7 @@ import PageContainer from '@app/shared/components/containers/PageContainer';
 import { CARD_COLORS, theme } from '@app/shared/theme/theme';
 import Button from '@app/shared/components/buttons/Button';
 
-import WalletLoading from '../components/WalletLoading';
+import { WalletLoading } from '../components/WalletLoading';
 import AnimatedWalletCard from '../components/AnimatedWalletCard';
 import useGetCards from '../hooks/useGetCards';
 import useWalletState from '../hooks/useWalletState';
