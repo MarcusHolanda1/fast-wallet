@@ -6,15 +6,22 @@ import {
 } from '@testing-library/react-native';
 import { configureStore } from '@reduxjs/toolkit';
 import WalletScreen from '../../WalletScreen';
-import { generateFakeCardData } from '../../../../../../__mocks__/card';
 import * as cardService from '../../../services/card';
-import { Card } from '@app/shared/types/card';
 import { TestWrapper } from '@app/shared/utils/MockedStoreWrapper';
+import {
+  fakeCardList,
+  mockSetOptions,
+  mockCardsReducer,
+  mockGetCardResponse,
+  mockHandleToggleSelection,
+  mockGetCardState,
+  mockGroupedCardsValue,
+  setMockGroupedCardsValue,
+  resetMocks
+} from '../__mocks__/WalletScreenMock';
+import { generateFakeCardData } from '../../../../../../__mocks__/card';
 
 const mockGetCards = jest.spyOn(cardService, 'getCards');
-const fakeCardList = [generateFakeCardData()];
-
-const mockSetOptions = jest.fn();
 
 jest.mock('@assets/svgs/icons/wallet.svg', () => ({
   __esModule: true,
@@ -26,8 +33,6 @@ jest.mock('@app/shared/hooks/useAppNavigation', () => ({
     setOptions: mockSetOptions
   })
 }));
-
-const mockCardsReducer = (state = { cards: fakeCardList }) => state;
 
 const createTestStore = () => {
   return configureStore({
@@ -45,23 +50,6 @@ const makeSut = (): RenderResult => {
   );
 };
 
-const mockGetCardResponse = (
-  cardData: Card[]
-): Promise<{ status: number; data: Card[] }> =>
-  Promise.resolve({
-    status: 200,
-    data: cardData
-  });
-
-const mockHandleToggleSelection = jest.fn();
-const mockGetCardState = jest.fn().mockReturnValue({
-  isSelected: false,
-  isOther: false,
-  shouldShow: true
-});
-
-let mockGroupedCardsValue = { hasSelection: true };
-
 jest.mock('../../../hooks/useWalletState', () => ({
   __esModule: true,
   default: jest.fn(() => ({
@@ -75,7 +63,7 @@ describe('WalletScreen tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
-    mockGroupedCardsValue = { hasSelection: true };
+    resetMocks();
   });
 
   afterEach(() => {
@@ -166,7 +154,7 @@ describe('WalletScreen tests', () => {
   });
 
   test('should render "usar este cartão" when hasSelection is false', async () => {
-    mockGroupedCardsValue = { hasSelection: false };
+    setMockGroupedCardsValue({ hasSelection: false });
 
     mockGetCards.mockResolvedValueOnce({
       status: 200,
