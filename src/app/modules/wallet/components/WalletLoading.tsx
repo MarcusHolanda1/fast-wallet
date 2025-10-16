@@ -95,7 +95,7 @@ function useWalletAnimation() {
   return { progress, walletScale, colorProgress };
 }
 
-export default function WalletLoading(): React.JSX.Element {
+export function WalletLoading(): React.JSX.Element {
   const { progress, walletScale, colorProgress } = useWalletAnimation();
 
   const { topStyle, bottomStyle } = useResponsiveBackgroundRectangles({
@@ -138,7 +138,10 @@ export default function WalletLoading(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Animated.View style={[styles.topStyle, topAnimStyle]}>
+      <Animated.View
+        style={[styles.topStyle, topAnimStyle]}
+        testID="wallet-loading"
+      >
         <BackgroundRectangle rotation="-36deg" style={topStyle} />
       </Animated.View>
       <Animated.View style={walletAnimStyle}>
