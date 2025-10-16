@@ -1,16 +1,31 @@
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  EnhancedStore,
+  StoreEnhancer,
+  Tuple,
+  UnknownAction,
+  ReducersMapObject
+} from '@reduxjs/toolkit';
 import React from 'react';
 
-const createTestStore = () => {
+const createTestStore = (
+  reducer: ReducersMapObject = {
+    test: (state: Record<string, unknown> = {}) => state
+  }
+) => {
   return configureStore({
-    reducer: {
-      test: (state: Record<string, unknown> = {}) => state
-    }
+    reducer
   });
 };
 
-export const TestWrapper = ({ children }: { children: React.ReactNode }) => {
-  const store = createTestStore();
+export const TestWrapper = ({
+  children,
+  fakeStore
+}: {
+  children: React.ReactNode;
+  fakeStore?: EnhancedStore<any, UnknownAction, Tuple<[StoreEnhancer]>>;
+}) => {
+  const store = fakeStore ?? createTestStore();
   return <Provider store={store}>{children}</Provider>;
 };
