@@ -23,7 +23,7 @@ const makeSut = (isLoading: boolean = false) => {
   );
 };
 
-describe('Credit card', () => {
+describe('Button test', () => {
   let sut: RenderResult;
 
   beforeEach(() => {

@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 type useAppQueryReturn<DataT> = {
   data?: DataT;
   isLoading: boolean;
-
   error: unknown;
 };
 

@@ -1,11 +1,11 @@
-import RegisterScreen from '@app/modules/register/screens/Register';
+import RegisterScreen from '@app/modules/register/screens/RegisterScreen';
 import HomeScreen from '@app/modules/home/screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackHeaderProps
 } from '@react-navigation/native-stack';
-import WalletScreen from '@app/modules/wallet/screens/Wallet';
+import WalletScreen from '@app/modules/wallet/screens/WalletScreen';
 import RegisterSuccessScreen from '@app/modules/register/screens/RegisterSuccessScreen';
 
 import { RootStackParamList } from './types';

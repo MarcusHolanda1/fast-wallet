@@ -22,12 +22,17 @@ export const CustomWalletHeader = ({
           <TouchableOpacity
             onPress={() => navigation.navigate('HomeScreen')}
             style={styles.backButton}
+            testID="wallet-go-back-button"
           >
             <GoBackSvg />
           </TouchableOpacity>
         )}
         <Text style={styles.headerTitle}>Fast Wallet</Text>
-        <TouchableOpacity onPress={onPlusPress} style={styles.plusButton}>
+        <TouchableOpacity
+          onPress={onPlusPress}
+          style={styles.plusButton}
+          testID="wallet-add-button"
+        >
           <AddSvg />
         </TouchableOpacity>
       </View>

@@ -1,6 +1,11 @@
 import Button from '@shared/components/buttons/Button';
 import InputText from '@shared/components/inputs/InputText';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  TouchableOpacity
+} from 'react-native';
 import { Controller } from 'react-hook-form';
 import { Masks } from 'react-native-mask-input';
 import { replaceWithTextOnly } from '@app/shared/utils/replaces';
@@ -54,9 +59,9 @@ const FormRegisterCard = () => {
               errorText={errors.cardNumber?.message}
               testID="card-number-input"
               prefix={
-                <View style={{ marginRight: -6, marginLeft: 10 }}>
+                <TouchableOpacity style={{ marginRight: -6, marginLeft: 10 }}>
                   <CameraSvg width={24} height={24} />
-                </View>
+                </TouchableOpacity>
               }
             />
           )}
